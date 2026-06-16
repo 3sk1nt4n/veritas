@@ -308,7 +308,7 @@ def render(flat):
         with open(hp, "w") as f:
             f.write(HEAD + c["html"] + TAIL)
         subprocess.run([CHROMIUM, "--headless=new", "--no-sandbox", "--hide-scrollbars",
-                        "--force-device-scale-factor=1", f"--window-size={W},{H}",
+                        "--force-device-scale-factor=2", f"--window-size={W},{H}",
                         "--virtual-time-budget=5000", "--default-background-color=ff070a10",
                         f"--screenshot={pp}", f"file://{hp}"], capture_output=True)
         if not os.path.exists(pp):
@@ -324,9 +324,11 @@ def stitch(flat):
     fc = []
     for i, c in enumerate(flat):
         z = "min(zoom+0.00032,1.055)" if c["heavy"] else "min(zoom+0.00020,1.035)"
-        fc.append(f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=decrease,"
-                  f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=0x070a10,setsar=1,fps={FPS},"
-                  f"zoompan=z='{z}':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W}x{H},format=yuv420p[v{i}]")
+        # supersample: states are rendered at 2x; keep 2x through zoompan, downscale to 1080p last (crisp text)
+        fc.append(f"[{i}:v]scale={W*2}:{H*2}:force_original_aspect_ratio=decrease,"
+                  f"pad={W*2}:{H*2}:(ow-iw)/2:(oh-ih)/2:color=0x070a10,setsar=1,fps={FPS},"
+                  f"zoompan=z='{z}':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W*2}x{H*2},"
+                  f"scale={W}:{H}:flags=lanczos,format=yuv420p[v{i}]")
     prev, cumulative = "v0", flat[0]["dur"]
     for i in range(1, len(flat)):
         name, dur = flat[i]["edge"]
@@ -336,7 +338,7 @@ def stitch(flat):
         cumulative += flat[i]["dur"] - dur
         prev = out
     cmd = ["ffmpeg", "-y", *inputs, "-filter_complex", ";".join(fc), "-map", f"[{prev}]",
-           "-r", str(FPS), "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+           "-r", str(FPS), "-c:v", "libx264", "-preset", "slow", "-crf", "17",
            "-pix_fmt", "yuv420p", "-movflags", "+faststart", OUT]
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
