@@ -2,73 +2,97 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    width: 1440px; height: 1020px; padding: 44px 52px;
-    font-family: "Inter", system-ui, sans-serif; color: #e6edf6;
+    width: 1440px; height: 1020px; padding: 46px 54px;
+    font-family: "Inter", system-ui, sans-serif; color: #f6ecf0; position: relative;
     background:
-      radial-gradient(1100px 500px at 82% -8%, rgba(34,211,238,.10), transparent 60%),
-      radial-gradient(800px 460px at 0% 0%, rgba(167,139,250,.08), transparent 55%),
-      #070a10;
+      radial-gradient(1200px 560px at 88% -12%, rgba(255,140,40,.24), transparent 58%),
+      radial-gradient(1100px 640px at -6% 116%, rgba(255,45,149,.22), transparent 60%),
+      radial-gradient(900px 520px at 50% 48%, rgba(232,121,249,.07), transparent 72%),
+      linear-gradient(140deg, #1d1019 0%, #130a15 55%, #0c0710 100%);
   }
   .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
-  h1 { font-size: 30px; font-weight: 700; letter-spacing: -.5px; }
-  h1 .c { color: #22d3ee; }
-  .sub { color: #8597b3; font-size: 15px; margin-top: 6px; }
+  h1 { font-size: 32px; font-weight: 800; letter-spacing: -.6px;
+       background: linear-gradient(90deg,#ff9d3d,#ff4d8d 60%,#e879f9);
+       -webkit-background-clip: text; background-clip: text; color: transparent;
+       filter: drop-shadow(0 0 22px rgba(255,77,141,.40)); }
+  .sub { color: #e7c2b6; font-size: 15.5px; margin-top: 7px; }
+  .sub b { color: #ffb27a; }
   .row { display: flex; align-items: stretch; gap: 26px; margin-top: 30px; }
-  .box { border: 1px solid #1e2a40; border-radius: 14px; background: rgba(15,22,35,.75);
-         padding: 18px 20px; box-shadow: 0 14px 40px -22px #000; }
-  .box.brand { border-color: rgba(34,211,238,.4); box-shadow: 0 0 0 1px rgba(34,211,238,.12), 0 14px 50px -20px rgba(34,211,238,.25); }
-  .box.aurora { border-color: rgba(34,211,238,.45); background: rgba(11,30,40,.6); }
-  .box.engine { border-color: rgba(167,139,250,.4); background: rgba(20,16,40,.5); }
-  .tag { font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; color: #8597b3; }
-  .title { font-size: 18px; font-weight: 600; margin-top: 4px; }
-  .desc { font-size: 13px; color: #aab8cf; margin-top: 6px; line-height: 1.5; }
+  .box { border: 1px solid rgba(255,160,90,.30); border-radius: 15px; background: rgba(40,23,31,.72);
+         padding: 19px 21px; box-shadow: 0 16px 44px -22px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.02) inset; }
+  .box.brand  { border-color: rgba(255,77,141,.55);  background: rgba(44,18,30,.66);
+                box-shadow: 0 0 0 1px rgba(255,77,141,.18), 0 16px 52px -20px rgba(255,77,141,.45); }
+  .box.aurora { border-color: rgba(255,157,61,.62);  background: rgba(46,26,14,.62);
+                box-shadow: 0 0 0 1px rgba(255,157,61,.20), 0 16px 52px -20px rgba(255,140,40,.50); }
+  .box.engine { border-color: rgba(232,121,249,.50); background: rgba(34,18,38,.62);
+                box-shadow: 0 0 0 1px rgba(232,121,249,.16), 0 16px 52px -20px rgba(232,121,249,.42); }
+  .tag { font-size: 11px; text-transform: uppercase; letter-spacing: 1.4px; color: #f0a888; font-weight: 600; }
+  .box.aurora .tag { color: #ffb154; }
+  .box.engine .tag { color: #efa6f6; }
+  .box.brand .tag  { color: #ff8fb3; }
+  .title { font-size: 19px; font-weight: 700; margin-top: 4px; color: #fff; }
+  .desc { font-size: 13px; color: #e9cfc2; margin-top: 7px; line-height: 1.5; }
   .col { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
-  .arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #22d3ee; min-width: 92px; }
-  .arrow .lab { font-size: 11px; color: #8597b3; text-align: center; margin-bottom: 4px; }
-  .arrow .ln { font-size: 26px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .chip { border: 1px solid #1e2a40; background: rgba(20,29,43,.8); border-radius: 7px;
-          padding: 4px 8px; font-size: 11.5px; color: #aab8cf; }
-  .chip.k { color: #67e8f9; border-color: rgba(34,211,238,.25); background: rgba(34,211,238,.06); }
-  .idx { color: #67e8f9; font-weight: 600; }
-  .boundary { margin-top: 30px; border: 1px dashed rgba(167,139,250,.5); border-radius: 12px;
-              padding: 14px 18px; background: rgba(167,139,250,.05); font-size: 13.5px; color: #c9bdf3; }
+  .arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 96px; }
+  .arrow .lab { font-size: 11px; color: #e7b59f; text-align: center; margin-bottom: 5px; letter-spacing: .3px; }
+  .arrow .ln { font-size: 30px; font-weight: 800;
+       background: linear-gradient(90deg,#ff9d3d,#ff4d8d); -webkit-background-clip: text; background-clip: text;
+       color: transparent; filter: drop-shadow(0 0 12px rgba(255,120,90,.6)); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 13px; }
+  .chip { border: 1px solid rgba(255,160,90,.28); background: rgba(52,30,26,.7); border-radius: 8px;
+          padding: 4px 9px; font-size: 11.5px; color: #f0d2c2; }
+  .chip.k { color: #ffd09a; border-color: rgba(255,157,61,.45); background: rgba(255,157,61,.10); font-weight: 600; }
+  .idx { color: #ff9d3d; font-weight: 700; }
+  .boundary { margin-top: 30px; border: 1.5px dashed rgba(255,77,141,.6); border-radius: 13px;
+              padding: 15px 20px; background: rgba(255,77,141,.07); font-size: 14px; color: #ffcfdd; }
   .boundary b { color: #fff; }
-  .foot { position: absolute; bottom: 30px; left: 52px; right: 52px; display:flex; justify-content: space-between;
-          font-size: 12px; color:#6b7d99; }
+  .foot { position: absolute; bottom: 30px; left: 54px; right: 54px; display: flex; justify-content: space-between;
+          font-size: 12px; color: #c79aa9; }
+  .foot b { color: #ffb27a; }
+  /* sharp warm corner brackets */
+  .corner { position: absolute; width: 40px; height: 40px; border: 2px solid rgba(255,140,60,.6); }
+  .ctl { top: 22px; left: 22px; border-right: 0; border-bottom: 0; }
+  .ctr { top: 22px; right: 22px; border-left: 0; border-bottom: 0; }
+  .cbl { bottom: 22px; left: 22px; border-right: 0; border-top: 0; }
+  .cbr { bottom: 22px; right: 22px; border-left: 0; border-top: 0; }
 </style>
 </head>
 <body>
-  <h1>Veritas <span class="c">- architecture</span></h1>
-  <div class="sub">Chain-of-custody for AI investigations · front end on Vercel · data of record in Amazon Aurora PostgreSQL (Serverless v2)</div>
+  <div class="corner ctl"></div><div class="corner ctr"></div>
+  <div class="corner cbl"></div><div class="corner cbr"></div>
+
+  <h1>Veritas - architecture</h1>
+  <div class="sub">Chain-of-custody for AI investigations &middot; front end on Vercel &middot; data of record in <b>Amazon Aurora PostgreSQL (Serverless v2)</b></div>
 
   <!-- read path -->
   <div class="row">
     <div class="box col" style="flex:1.05">
       <div class="tag">Analyst</div>
       <div class="title">Browser</div>
-      <div class="desc">Dashboards, findings, the claim→fact→tool trace, cross-case IOC pivot.</div>
+      <div class="desc">Dashboards, findings, the claim&rarr;fact&rarr;tool trace, cross-case IOC pivot.</div>
     </div>
-    <div class="arrow"><div class="lab">HTTPS</div><div class="ln">→</div></div>
+    <div class="arrow"><div class="lab">HTTPS</div><div class="ln">&rarr;</div></div>
     <div class="box brand col" style="flex:1.25">
-      <div class="tag">Web tier · Vercel</div>
+      <div class="tag">Web tier &middot; Vercel</div>
       <div class="title">Next.js 15 (App Router)</div>
       <div class="desc">Server components query Aurora directly. Read screens need zero Python at request time.</div>
       <div class="chips"><span class="chip">Server Components</span><span class="chip">Route Handlers</span><span class="chip">v0-built UI</span></div>
     </div>
-    <div class="arrow"><div class="lab">pooled SQL<br/>RDS Proxy / Data API</div><div class="ln">→</div></div>
+    <div class="arrow"><div class="lab">pooled SQL<br/>over SSL</div><div class="ln">&rarr;</div></div>
     <div class="box aurora col" style="flex:1.5">
       <div class="tag">Data of record</div>
-      <div class="title">Amazon Aurora PostgreSQL · Serverless v2</div>
+      <div class="title">Amazon Aurora PostgreSQL &middot; Serverless v2</div>
       <div class="desc">Deliberate, normalized chain-of-custody model + the engine's pivot indexes as real DB indexes.</div>
       <div class="chips">
         <span class="chip k">cases</span><span class="chip k">evidence_sources</span><span class="chip k">tool_runs</span>
-        <span class="chip k">facts · JSONB + <span class="idx">~19 idx</span></span><span class="chip k">findings</span>
-        <span class="chip k">claims</span><span class="chip">audit ledger</span><span class="chip">fact_entity_pivot · matview</span>
-        <span class="chip">pg_trgm · GIN</span><span class="chip">RLS by org_id</span><span class="chip">recursive CTEs</span>
+        <span class="chip k">facts &middot; JSONB + <span class="idx">~19 idx</span></span><span class="chip k">findings</span>
+        <span class="chip k">claims</span><span class="chip">audit ledger</span><span class="chip">fact_entity_pivot &middot; matview</span>
+        <span class="chip">pg_trgm &middot; GIN</span><span class="chip">RLS by org_id</span><span class="chip">recursive CTEs</span>
       </div>
     </div>
   </div>
@@ -80,14 +104,14 @@
       <div class="title">Enqueue (Vercel)</div>
       <div class="desc mono" style="font-size:12px">INSERT INTO runs_queue (status='queued')</div>
     </div>
-    <div class="arrow"><div class="lab">claim job<br/><span class="mono">SKIP LOCKED</span></div><div class="ln">←</div></div>
+    <div class="arrow"><div class="lab">claim job<br/><span class="mono">SKIP LOCKED</span></div><div class="ln">&larr;</div></div>
     <div class="box engine col" style="flex:1.25">
-      <div class="tag">Engine worker · ECS / EC2</div>
+      <div class="tag">Engine worker &middot; ECS / EC2</div>
       <div class="title">Sentinel Ensemble (16-step)</div>
-      <div class="desc">MCP server · 181 typed forensic tools · 4-model ensemble · deterministic trust layer.</div>
-      <div class="chips"><span class="chip">reads evidence ← Amazon S3</span><span class="chip">ingest adapter → Aurora</span></div>
+      <div class="desc">MCP server &middot; 181 typed forensic tools &middot; 4-model ensemble &middot; deterministic trust layer.</div>
+      <div class="chips"><span class="chip">reads evidence &larr; Amazon S3</span><span class="chip">ingest adapter &rarr; Aurora</span></div>
     </div>
-    <div class="arrow"><div class="lab">UPSERT validated<br/>facts/findings</div><div class="ln">→</div></div>
+    <div class="arrow"><div class="lab">UPSERT validated<br/>facts/findings</div><div class="ln">&rarr;</div></div>
     <div class="box aurora col" style="flex:1.5; align-items:center; justify-content:center">
       <div class="title" style="text-align:center">ON CONFLICT (fact_signature)<br/>signature merge</div>
       <div class="desc" style="text-align:center">Only deterministically validated facts ever land here.</div>
@@ -99,6 +123,6 @@
     only facts that cleared the deterministic disposition gates cross into Aurora. The AI proposes; code decides; every row traces to the tool that proved it.
   </div>
 
-  <div class="foot"><span>github.com/3sk1nt4n · Veritas</span><span>H0 · Track 2 (B2B) · AWS Database: Amazon Aurora PostgreSQL</span></div>
+  <div class="foot"><span><b>github.com/3sk1nt4n</b> &middot; Veritas</span><span>H0 &middot; Track 2 (B2B) &middot; AWS Database: Amazon Aurora PostgreSQL</span></div>
 </body>
 </html>

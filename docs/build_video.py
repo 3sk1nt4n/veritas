@@ -214,11 +214,12 @@ AURORA_BULLETS = [
 
 # each slide: {dur, states:[html,...], heavy:bool}
 SLIDES = [
+    # cold open on the pipeline / architecture
+    {"dur": 5.5, "heavy": True, "states": [full(ARCH,
+            "The system: a Vercel front end, Amazon Aurora as the system of record, an engine worker behind a trust boundary.")]},
     {"dur": 5.0, "states": [cover("H0 &middot; Track 2 (B2B) &middot; Amazon Aurora PostgreSQL + Vercel",
             'VERI<span class="c">TAS</span>',
             'The investigation platform where the AI <span class="thesis">never gets the final word.</span>')]},
-    {"dur": 6.5, "heavy": True, "states": [full(ARCH,
-            "The system at a glance: a Vercel front end, Amazon Aurora as the system of record, an engine worker behind a trust boundary.")]},
 
     # ---- Q1 ----
     {"dur": 6.0, "states": [statement("Answering the brief &middot; 1 of 3",
