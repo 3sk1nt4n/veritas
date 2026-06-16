@@ -257,9 +257,9 @@ SLIDES = [
 
     # ---- under the hood: the real engine ----
     {"dur": 5.5, "heavy": True, "states": [full(STRUCTURE,
-            "Under the hood: ~78k lines of Python. The conductor and the deterministic trust layer own the pipeline.")]},
+            "The Veritas repo: a Next.js front end on Vercel, the Amazon Aurora schema, and an async ingest worker.")]},
     {"dur": 7.0, "heavy": True, "states": [full(PIPELINE,
-            "The engine: 16 steps across a trust boundary. The AI (pink) is summoned just 5 times, and trusted with nothing.")]},
+            "End to end: evidence to engine to Aurora to the Vercel app - only validated facts cross the trust boundary.")]},
 
     # ---- Q3 ----
     {"dur": 5.5, "states": [statement("Answering the brief &middot; 3 of 3",
