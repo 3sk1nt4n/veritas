@@ -12,6 +12,7 @@ export function Nav() {
         <nav className="flex items-center gap-5 text-sm">
           <Link href="/" className="link-ghost">Cases</Link>
           <Link href="/pivot" className="link-ghost">Cross-case pivot</Link>
+          <Link href="/runs" className="link-ghost">New run</Link>
           <a href="https://github.com/3sk1nt4n/Sentinel-Ensemble" target="_blank" rel="noreferrer" className="link-ghost">Engine ↗</a>
         </nav>
       </div>
