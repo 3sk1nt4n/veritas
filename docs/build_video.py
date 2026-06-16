@@ -200,6 +200,8 @@ def aurora_proof():
 
 
 ARCH = data_uri(os.path.join(HERE, "architecture.png"))
+STRUCTURE = data_uri(os.path.join(HERE, "structure.png"))
+PIPELINE = data_uri(os.path.join(HERE, "pipeline.png"))
 SQL = ('<span class="kw">INSERT INTO</span> facts (&hellip;) <span class="kw">VALUES</span> (&hellip;)\n'
        '<span class="kw">ON CONFLICT</span> (case_id, fact_signature) <span class="kw">DO UPDATE</span>\n'
        '  <span class="kw">SET</span> source_tools = array_cat(facts.source_tools, EXCLUDED.source_tools),\n'
@@ -252,6 +254,12 @@ SLIDES = [
     {"dur": 5.5, "heavy": True, "states": [shot("New investigation", "Postgres is the queue.",
             "Enqueue a run; a worker claims it with SELECT FOR UPDATE SKIP LOCKED and streams 16-step progress.",
             "&hellip;/runs", data_uri(os.path.join(SHOTS, "06-runs.png")))]},
+
+    # ---- under the hood: the real engine ----
+    {"dur": 5.5, "heavy": True, "states": [full(STRUCTURE,
+            "Under the hood: ~78k lines of Python. The conductor and the deterministic trust layer own the pipeline.")]},
+    {"dur": 7.0, "heavy": True, "states": [full(PIPELINE,
+            "The engine: 16 steps across a trust boundary. The AI (pink) is summoned just 5 times, and trusted with nothing.")]},
 
     # ---- Q3 ----
     {"dur": 5.5, "states": [statement("Answering the brief &middot; 3 of 3",

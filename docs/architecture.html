@@ -8,58 +8,64 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     width: 1440px; height: 1020px; padding: 46px 54px;
-    font-family: "Inter", system-ui, sans-serif; color: #f6ecf0; position: relative;
+    font-family: "Inter", system-ui, sans-serif; color: #fff7f2; position: relative;
     background:
-      radial-gradient(1200px 560px at 88% -12%, rgba(255,140,40,.24), transparent 58%),
-      radial-gradient(1100px 640px at -6% 116%, rgba(255,45,149,.22), transparent 60%),
-      radial-gradient(900px 520px at 50% 48%, rgba(232,121,249,.07), transparent 72%),
-      linear-gradient(140deg, #1d1019 0%, #130a15 55%, #0c0710 100%);
+      radial-gradient(1250px 640px at 86% -8%, rgba(255,184,58,.55), transparent 56%),
+      radial-gradient(1100px 660px at -4% 116%, rgba(255,78,150,.48), transparent 58%),
+      radial-gradient(1000px 580px at 50% 44%, rgba(255,214,72,.18), transparent 66%),
+      linear-gradient(140deg, #3c1c2e 0%, #2a1430 52%, #1d1226 100%);
   }
   .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
-  h1 { font-size: 32px; font-weight: 800; letter-spacing: -.6px;
-       background: linear-gradient(90deg,#ff9d3d,#ff4d8d 60%,#e879f9);
+  h1 { font-size: 35px; font-weight: 800; letter-spacing: -.6px;
+       background: linear-gradient(92deg,#ffe14d,#ffa12e 42%,#ff4d8d 78%,#e879f9);
        -webkit-background-clip: text; background-clip: text; color: transparent;
-       filter: drop-shadow(0 0 22px rgba(255,77,141,.40)); }
-  .sub { color: #e7c2b6; font-size: 15.5px; margin-top: 7px; }
-  .sub b { color: #ffb27a; }
+       filter: drop-shadow(0 0 30px rgba(255,180,60,.65)); }
+  .sub { color: #ffe0cf; font-size: 16px; margin-top: 8px; }
+  .sub b { color: #ffd45e; }
   .row { display: flex; align-items: stretch; gap: 26px; margin-top: 30px; }
-  .box { border: 1px solid rgba(255,160,90,.30); border-radius: 15px; background: rgba(40,23,31,.72);
-         padding: 19px 21px; box-shadow: 0 16px 44px -22px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.02) inset; }
-  .box.brand  { border-color: rgba(255,77,141,.55);  background: rgba(44,18,30,.66);
-                box-shadow: 0 0 0 1px rgba(255,77,141,.18), 0 16px 52px -20px rgba(255,77,141,.45); }
-  .box.aurora { border-color: rgba(255,157,61,.62);  background: rgba(46,26,14,.62);
-                box-shadow: 0 0 0 1px rgba(255,157,61,.20), 0 16px 52px -20px rgba(255,140,40,.50); }
-  .box.engine { border-color: rgba(232,121,249,.50); background: rgba(34,18,38,.62);
-                box-shadow: 0 0 0 1px rgba(232,121,249,.16), 0 16px 52px -20px rgba(232,121,249,.42); }
-  .tag { font-size: 11px; text-transform: uppercase; letter-spacing: 1.4px; color: #f0a888; font-weight: 600; }
-  .box.aurora .tag { color: #ffb154; }
-  .box.engine .tag { color: #efa6f6; }
-  .box.brand .tag  { color: #ff8fb3; }
+  .box { border: 1.5px solid rgba(255,196,120,.55); border-radius: 16px;
+         background: linear-gradient(180deg, rgba(86,52,64,.88), rgba(56,32,46,.82));
+         padding: 19px 21px; box-shadow: 0 20px 50px -20px rgba(0,0,0,.55), 0 1px 0 0 rgba(255,255,255,.16) inset; }
+  .box.brand  { border-color: rgba(255,104,160,.8);
+                background: linear-gradient(180deg, rgba(110,40,72,.9), rgba(70,26,50,.82));
+                box-shadow: 0 0 0 1px rgba(255,104,160,.3), 0 20px 58px -18px rgba(255,78,150,.7), 0 1px 0 0 rgba(255,255,255,.18) inset; }
+  .box.aurora { border-color: rgba(255,190,76,.9);
+                background: linear-gradient(180deg, rgba(112,68,28,.9), rgba(74,44,18,.82));
+                box-shadow: 0 0 0 1px rgba(255,190,76,.34), 0 20px 58px -18px rgba(255,168,44,.75), 0 1px 0 0 rgba(255,255,255,.2) inset; }
+  .box.engine { border-color: rgba(232,121,249,.78);
+                background: linear-gradient(180deg, rgba(82,40,90,.9), rgba(54,28,62,.82));
+                box-shadow: 0 0 0 1px rgba(232,121,249,.28), 0 20px 58px -18px rgba(232,121,249,.62), 0 1px 0 0 rgba(255,255,255,.16) inset; }
+  .tag { font-size: 11px; text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700; color: #ffc59a; }
+  .box.aurora .tag { color: #ffd45e; }
+  .box.engine .tag { color: #f3b6fa; }
+  .box.brand .tag  { color: #ff9dbd; }
   .title { font-size: 19px; font-weight: 700; margin-top: 4px; color: #fff; }
-  .desc { font-size: 13px; color: #e9cfc2; margin-top: 7px; line-height: 1.5; }
+  .desc { font-size: 13px; color: #ffe6d8; margin-top: 7px; line-height: 1.5; }
   .col { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
   .arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 96px; }
-  .arrow .lab { font-size: 11px; color: #e7b59f; text-align: center; margin-bottom: 5px; letter-spacing: .3px; }
-  .arrow .ln { font-size: 30px; font-weight: 800;
-       background: linear-gradient(90deg,#ff9d3d,#ff4d8d); -webkit-background-clip: text; background-clip: text;
-       color: transparent; filter: drop-shadow(0 0 12px rgba(255,120,90,.6)); }
+  .arrow .lab { font-size: 11px; color: #ffcaa6; text-align: center; margin-bottom: 5px; letter-spacing: .3px; }
+  .arrow .ln { font-size: 32px; font-weight: 800;
+       background: linear-gradient(90deg,#ffe14d,#ff7a18); -webkit-background-clip: text; background-clip: text;
+       color: transparent; filter: drop-shadow(0 0 16px rgba(255,190,50,.85)); }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 13px; }
-  .chip { border: 1px solid rgba(255,160,90,.28); background: rgba(52,30,26,.7); border-radius: 8px;
-          padding: 4px 9px; font-size: 11.5px; color: #f0d2c2; }
-  .chip.k { color: #ffd09a; border-color: rgba(255,157,61,.45); background: rgba(255,157,61,.10); font-weight: 600; }
-  .idx { color: #ff9d3d; font-weight: 700; }
-  .boundary { margin-top: 30px; border: 1.5px dashed rgba(255,77,141,.6); border-radius: 13px;
-              padding: 15px 20px; background: rgba(255,77,141,.07); font-size: 14px; color: #ffcfdd; }
-  .boundary b { color: #fff; }
+  .chip { border: 1px solid rgba(255,196,130,.45); background: rgba(96,58,50,.78); border-radius: 8px;
+          padding: 4px 9px; font-size: 11.5px; color: #ffeede; }
+  .chip.k { color: #2a1206; border: 0; background: linear-gradient(180deg,#ffe06a,#ffb347); font-weight: 700;
+            box-shadow: 0 2px 10px -2px rgba(255,190,60,.6); }
+  .idx { color: #2a1206; background: linear-gradient(180deg,#ffe14d,#ffc31f); padding: 0 6px; border-radius: 5px; font-weight: 800; }
+  .boundary { margin-top: 30px; border: 1.5px dashed rgba(255,104,160,.85); border-radius: 14px;
+              padding: 15px 20px; background: rgba(255,104,160,.14); font-size: 14px; color: #ffdfe9;
+              box-shadow: 0 0 40px -10px rgba(255,78,150,.4) inset; }
+  .boundary b { color: #ffe14d; }
   .foot { position: absolute; bottom: 30px; left: 54px; right: 54px; display: flex; justify-content: space-between;
-          font-size: 12px; color: #c79aa9; }
-  .foot b { color: #ffb27a; }
-  /* sharp warm corner brackets */
-  .corner { position: absolute; width: 40px; height: 40px; border: 2px solid rgba(255,140,60,.6); }
-  .ctl { top: 22px; left: 22px; border-right: 0; border-bottom: 0; }
-  .ctr { top: 22px; right: 22px; border-left: 0; border-bottom: 0; }
-  .cbl { bottom: 22px; left: 22px; border-right: 0; border-top: 0; }
-  .cbr { bottom: 22px; right: 22px; border-left: 0; border-top: 0; }
+          font-size: 12px; color: #ecb6c4; }
+  .foot b { color: #ffd45e; }
+  .corner { position: absolute; width: 42px; height: 42px; border: 2.5px solid rgba(255,206,90,.9);
+            box-shadow: 0 0 16px rgba(255,196,70,.7); }
+  .ctl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+  .ctr { top: 20px; right: 20px; border-left: 0; border-bottom: 0; }
+  .cbl { bottom: 20px; left: 20px; border-right: 0; border-top: 0; }
+  .cbr { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
 </style>
 </head>
 <body>
@@ -69,7 +75,6 @@
   <h1>Veritas - architecture</h1>
   <div class="sub">Chain-of-custody for AI investigations &middot; front end on Vercel &middot; data of record in <b>Amazon Aurora PostgreSQL (Serverless v2)</b></div>
 
-  <!-- read path -->
   <div class="row">
     <div class="box col" style="flex:1.05">
       <div class="tag">Analyst</div>
@@ -97,7 +102,6 @@
     </div>
   </div>
 
-  <!-- write / new-run path -->
   <div class="row">
     <div class="box col" style="flex:1.05">
       <div class="tag">New investigation</div>

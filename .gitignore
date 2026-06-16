@@ -21,3 +21,7 @@ local-data/
 
 # video working frames (the final docs/veritas-demo.mp4 is committed)
 docs/video_build/
+
+# generated diagram html (PNGs are committed)
+docs/pipeline.html
+docs/structure.html
