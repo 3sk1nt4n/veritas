@@ -1,4 +1,4 @@
-# I built an AI investigation platform where the AI never gets the final word — on Amazon Aurora + Vercel
+# I built an AI investigation platform where the AI never gets the final word - on Amazon Aurora + Vercel
 
 *I built this project, Veritas, for the H0: Hack the Zero Stack with Vercel v0 and AWS Databases hackathon. #H0Hackathon*
 
@@ -88,7 +88,7 @@ the validated result. Simple, durable, and one less moving part.
 Open a finding the model wanted to confirm. You see:
 
 > **Model / ReAct proposed:** Confirmed malicious
-> **Veritas (deterministic) verdict:** Suspicious — promotion withheld
+> **Veritas (deterministic) verdict:** Suspicious - promotion withheld
 > *because:* `gate:confirmed_ineligible[rwx_memory_region_uncorroborated, ...]`,
 > `MALICIOUS_SEMANTIC_GATE=FAIL`
 

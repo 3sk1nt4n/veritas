@@ -22,7 +22,7 @@ export default async function PivotPage({
       <section>
         <h1 className="text-xl font-semibold tracking-tight text-white">Cross-case IOC pivot</h1>
         <p className="mt-1 max-w-2xl text-sm text-haze">
-          Type any entity — a hash, IP, PID, registry key — and see every case it appears in.
+          Type any entity - a hash, IP, PID, registry key - and see every case it appears in.
           This is one indexed Aurora query across the entire corpus; the file-based engine
           cannot do it.
         </p>

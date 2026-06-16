@@ -1,4 +1,4 @@
-# Your steps — Veritas (H0) — written for zero assumptions
+# Your steps - Veritas (H0) - written for zero assumptions
 
 I (Claude) have built and tested everything that runs on your machine: the
 database design, the data loader, the whole website, and the background worker.
@@ -10,22 +10,22 @@ Pattern for the whole list: **you click; then paste me one thing; I do the rest.
 Anything in `code font` is a value to copy. When a step says "→ tell Claude," come
 back to this chat and paste what it asks for.
 
-Time estimate: ~2–3 focused hours, most of it waiting for AWS to create things.
+Time estimate: ~2-3 focused hours, most of it waiting for AWS to create things.
 
 ---
 
 ## What is already done (you don't need to touch any of this)
-- ✅ Database schema (`db/schema.sql`) — built, applied, tested.
-- ✅ Data loader (`ingest/ingest.py`) — loads your real cases; counts verified.
-- ✅ The website (`web/`) — 6 screens, builds clean, tested against real data.
-- ✅ Background worker (`ingest/worker.py`) — the "queue a new run" feature, tested.
-- ✅ Architecture diagram, submission text, demo script — in `docs/`.
+- ✅ Database schema (`db/schema.sql`) - built, applied, tested.
+- ✅ Data loader (`ingest/ingest.py`) - loads your real cases; counts verified.
+- ✅ The website (`web/`) - 6 screens, builds clean, tested against real data.
+- ✅ Background worker (`ingest/worker.py`) - the "queue a new run" feature, tested.
+- ✅ Architecture diagram, submission text, demo script - in `docs/`.
 
 You are wiring this proven thing to the cloud. Nothing here is risky.
 
 ---
 
-## Step 1 — Redeem your two credit codes (10 min)
+## Step 1 - Redeem your two credit codes (10 min)
 
 **Why:** these pay for the database (AWS) and the design tool (v0). Both are free
 to you.
@@ -41,7 +41,7 @@ to you.
 
 ---
 
-## Step 2 — Put the code on GitHub (10 min)
+## Step 2 - Put the code on GitHub (10 min)
 
 **Why:** Vercel deploys websites *from* GitHub, and the hackathon needs a public
 repo.
@@ -55,7 +55,7 @@ side; I won't push anything public without your go-ahead).
 
 ---
 
-## Step 3 — Create the Aurora database (30 min, mostly waiting)
+## Step 3 - Create the Aurora database (30 min, mostly waiting)
 
 **Why:** this is the AWS database the whole project is judged on.
 
@@ -74,16 +74,16 @@ side; I won't push anything public without your go-ahead).
 7. **Cluster storage / capacity:** choose **Serverless v2**. Min capacity: `0.5`
    ACU, Max: `2` ACU (cheap; plenty for the demo).
 8. **Connectivity:**
-   - **Public access: Yes** (so Vercel and your machine can reach it — simplest
+   - **Public access: Yes** (so Vercel and your machine can reach it - simplest
      path for a hackathon).
    - VPC security group: **Create new**, name it `veritas-sg`.
-9. Leave the rest as defaults. Click **Create database**. Wait ~10–15 min until
+9. Leave the rest as defaults. Click **Create database**. Wait ~10-15 min until
    status is **Available**.
 10. **Open the firewall:** RDS → your `veritas-db` → Connectivity & security →
     click the **VPC security group** → **Inbound rules** → **Edit** → **Add rule**
     → Type **PostgreSQL** (port 5432), Source **Anywhere-IPv4 (0.0.0.0/0)** →
     Save. (Fine for a demo; we can tighten later.)
-11. On the `veritas-db` page, copy the **Endpoint** of the *writer* instance — it
+11. On the `veritas-db` page, copy the **Endpoint** of the *writer* instance - it
     looks like `veritas-db.cluster-xxxx.us-east-1.rds.amazonaws.com`.
 
 → **Tell me:** the **endpoint**, the **master password**, and the **region**.
@@ -97,7 +97,7 @@ Aurora for you, and confirm the row counts. (You can also paste them as one line
 
 ---
 
-## Step 4 — I load Aurora (you do nothing)
+## Step 4 - I load Aurora (you do nothing)
 
 Once you give me Step 3's values, I will:
 - apply `db/schema.sql` to Aurora,
@@ -107,13 +107,13 @@ Once you give me Step 3's values, I will:
 
 ---
 
-## Step 5 — Deploy the website to Vercel (15 min)
+## Step 5 - Deploy the website to Vercel (15 min)
 
 **Why:** this is the public app + the "front end on Vercel" the rules require.
 
 1. Go to https://vercel.com → **Add New… → Project** → **Import** your `veritas`
    GitHub repo.
-2. **Important — Root Directory:** click **Edit** and set it to **`web`** (our
+2. **Important - Root Directory:** click **Edit** and set it to **`web`** (our
    Next.js app lives in the `web/` folder).
 3. **Environment Variables** (I'll give you the exact values in Step 4):
    - `DATABASE_URL` = `postgresql://postgres:YOURPASS@YOUR-ENDPOINT:5432/postgres`
@@ -127,7 +127,7 @@ Once you give me Step 3's values, I will:
 
 ---
 
-## Step 6 — (Optional, "go big") the live "new run" worker
+## Step 6 - (Optional, "go big") the live "new run" worker
 
 The website's **New run** feature works the moment the worker process is running.
 For the demo you can run the worker on your own machine (it talks to Aurora):
@@ -139,16 +139,16 @@ DATABASE_URL="<the Aurora URL from Step 4>" .venv/bin/python ingest/worker.py --
 
 Leave it running while you record; queue a run in the UI and the 16-step bar
 moves. (Real evidence-from-S3 upload is a production extra; the demo uses the
-seeded captures. Skip this entire step if you're short on time — the read app is
+seeded captures. Skip this entire step if you're short on time - the read app is
 the star.)
 
 ---
 
-## Step 7 — Record the demo video (45 min) — **this is the big one**
+## Step 7 - Record the demo video (45 min) - **this is the big one**
 
 **Why:** the most heavily weighted submission artifact. Under 3 minutes, YouTube.
 
-- Open `docs/DEMO-SCRIPT.md` — it's a word-for-word, timed script (2:45).
+- Open `docs/DEMO-SCRIPT.md` - it's a word-for-word, timed script (2:45).
 - Record your screen + voice (Loom, OBS, or even your phone over the screen).
 - Must show: the live Vercel URL, the "AI overruled" moment, the proof chain, the
   cross-case pivot, one live SQL query, and **the AWS Aurora console**.
@@ -158,30 +158,30 @@ the star.)
 
 ---
 
-## Step 8 — The AWS proof screenshot (2 min)
+## Step 8 - The AWS proof screenshot (2 min)
 
 In the AWS RDS console, screenshot the `veritas-db` page showing it's an **Aurora
-PostgreSQL Serverless v2** cluster, status Available. Save it — the rules require
+PostgreSQL Serverless v2** cluster, status Available. Save it - the rules require
 a screenshot proving AWS database usage.
 
 ---
 
-## Step 9 — Submit on Devpost (15 min)
+## Step 9 - Submit on Devpost (15 min)
 
 Go to the H0 project page → Submit. You'll paste:
-- [ ] **Text description** — I'll hand you the final version (`docs/SUBMISSION.md`).
+- [ ] **Text description** - I'll hand you the final version (`docs/SUBMISSION.md`).
 - [ ] **Demo video** link (Step 7).
 - [ ] **Published Vercel URL** + **Vercel Team ID** (Step 5).
-- [ ] **Architecture diagram** — `docs/architecture.png` (done).
+- [ ] **Architecture diagram** - `docs/architecture.png` (done).
 - [ ] **AWS screenshot** (Step 8).
 - [ ] **Public GitHub repo** link (Step 2).
-- [ ] (Bonus) a short blog/LinkedIn post with **#H0Hackathon** — I can draft it.
+- [ ] (Bonus) a short blog/LinkedIn post with **#H0Hackathon** - I can draft it.
 
 **Deadline: 2026-06-29, 5:00 PM PT. Submit a day early.**
 
 ---
 
-## Separate track — Qwen hackathon (not part of H0)
+## Separate track - Qwen hackathon (not part of H0)
 
 Whenever Jade sends your DashScope key:
 ```bash
@@ -190,7 +190,7 @@ export SIFT_LLM_PROVIDER=qwen DASHSCOPE_API_KEY=sk-... SIFT_DEFAULT_MODEL=qwen-m
 python3 scripts/qwen_smoke.py        # should print a Qwen reply
 ```
 And when you make that repo public on GitHub, tell me the URL and I'll push it.
-(Qwen deadline is 2026-07-09 — after H0. Do H0 first.)
+(Qwen deadline is 2026-07-09 - after H0. Do H0 first.)
 
 ---
 

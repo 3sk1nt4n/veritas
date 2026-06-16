@@ -2,7 +2,7 @@ import { BUCKET_META, Tool, Mono, ENTITY_GLYPH } from "./ui";
 import type { TraceRow, ClaimRow } from "@/lib/queries";
 
 function dispoLabel(d: string | null) {
-  if (!d) return "—";
+  if (!d) return "-";
   return BUCKET_META[d]?.label ?? d.replace(/_/g, " ");
 }
 
@@ -66,7 +66,7 @@ export function Claims({ claims }: { claims: ClaimRow[] }) {
         {claims.map((c, i) => (
           <div key={i} className="flex flex-wrap items-center gap-2 p-3 text-sm">
             <span className="chip">{c.claim_type ?? "claim"}</span>
-            <span className="text-white">{c.claim_value ?? c.filename ?? "—"}</span>
+            <span className="text-white">{c.claim_value ?? c.filename ?? "-"}</span>
             {c.sha1 && <Mono className="!text-haze">{c.sha1}</Mono>}
             <span className="ml-auto flex flex-wrap gap-1.5">
               {(c.source_tools ?? []).map((t) => <Tool key={t} name={t} />)}

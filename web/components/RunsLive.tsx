@@ -82,7 +82,7 @@ export function RunsLive({ initial }: { initial: Run[] }) {
 
       <div className="space-y-2.5">
         {runs.length === 0 && (
-          <div className="panel p-5 text-sm text-haze">No runs yet. Queue one above — a worker will claim it.</div>
+          <div className="panel p-5 text-sm text-haze">No runs yet. Queue one above - a worker will claim it.</div>
         )}
         {runs.map((r) => {
           const pct = Math.round((Math.min(r.step_reached, N_STEPS) / N_STEPS) * 100);

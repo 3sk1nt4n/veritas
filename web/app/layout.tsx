@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 
 export const metadata: Metadata = {
-  title: "Veritas — the AI never gets the final word",
+  title: "Veritas - the AI never gets the final word",
   description:
     "A chain-of-custody platform for AI-assisted investigations. Deterministic code decides what is confirmed; every finding traces to the tool that proved it. Built on Amazon Aurora PostgreSQL.",
 };

@@ -18,7 +18,7 @@ export default async function Home() {
           <span className="text-brand">The AI never gets the final word.</span>
         </h1>
         <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-haze">
-          An autonomous agent investigates digital evidence end to end — but deterministic
+          An autonomous agent investigates digital evidence end to end - but deterministic
           code, not the model, decides what is <em>confirmed</em>, and every claim traces by
           foreign key to the exact tool record that proved it. When the model over-calls a
           threat, Veritas overrules it and shows you the gate that withheld promotion.
@@ -61,7 +61,7 @@ function CaseCard({ c }: { c: CaseRow }) {
           <div className="mt-0.5 text-xs text-haze mono">{c.sample_name}</div>
         </div>
         <span className={`rounded-md border px-2.5 py-1 text-xs font-semibold ${v.text} ${v.ring}`}>
-          {c.verdict ?? "—"}
+          {c.verdict ?? "-"}
         </span>
       </div>
       <div className="mt-4 grid grid-cols-4 gap-2 text-center">

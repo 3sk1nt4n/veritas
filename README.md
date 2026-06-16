@@ -92,6 +92,6 @@ runs_queue (Aurora)  <--SELECT FOR UPDATE SKIP LOCKED--  Sentinel Ensemble engin
 - [x] Async new-run worker (Postgres queue + `SELECT FOR UPDATE SKIP LOCKED`) + live progress
 - [x] Architecture diagram + submission text + demo script (`docs/`)
 - [x] **Live on Vercel + Aurora:** https://veritas-rouge.vercel.app (public, real cloud data)
-- [ ] Record demo video + RDS console screenshot + submit — [`docs/YOUR-STEPS.md`](docs/YOUR-STEPS.md)
+- [ ] Record demo video + RDS console screenshot + submit - [`docs/YOUR-STEPS.md`](docs/YOUR-STEPS.md)
 
 MIT License. Built on [Sentinel Ensemble](https://github.com/3sk1nt4n/Sentinel-Ensemble).

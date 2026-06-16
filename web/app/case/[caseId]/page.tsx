@@ -29,7 +29,7 @@ export default async function CaseDashboard({ params }: { params: Promise<{ case
       <section className={`panel flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between ${v.glow}`}>
         <div>
           <div className="text-xs uppercase tracking-wide text-haze">Case verdict</div>
-          <div className={`mt-1 text-4xl font-bold tracking-tight ${v.text}`}>{c.verdict ?? "—"}</div>
+          <div className={`mt-1 text-4xl font-bold tracking-tight ${v.text}`}>{c.verdict ?? "-"}</div>
           <div className="mt-2 text-sm text-white">{c.case_name}</div>
           <div className="text-xs text-haze mono">{c.sample_name}</div>
         </div>
@@ -44,7 +44,7 @@ export default async function CaseDashboard({ params }: { params: Promise<{ case
         </div>
       </section>
 
-      {/* the overrule highlight — the product's headline */}
+      {/* the overrule highlight - the product's headline */}
       {overruled.length > 0 && (
         <Link href={`/case/${caseId}/findings?bucket=suspicious_needs_review`}
           className="panel block border-brand/30 bg-brand/[0.06] p-5 transition hover:border-brand/50">
