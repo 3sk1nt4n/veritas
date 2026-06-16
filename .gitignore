@@ -25,3 +25,8 @@ docs/video_build/
 # generated diagram html (PNGs are committed)
 docs/pipeline.html
 docs/structure.html
+
+# stray run logs
+analysis/
+web/analysis/
+*.log
