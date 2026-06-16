@@ -82,9 +82,37 @@ ul.bul b{color:#fff}
 .links .u{color:#67e8f9}
 .tag-pill{display:inline-block;margin-top:40px;border:1px solid rgba(34,211,238,.4);background:rgba(34,211,238,.1);
   color:#67e8f9;border-radius:999px;padding:14px 30px;font-size:30px;font-weight:600}
+/* ---------- fancy layer ---------- */
+.grid{position:absolute;inset:0;pointer-events:none;opacity:.6;z-index:0;
+  background-image:linear-gradient(rgba(34,211,238,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(34,211,238,.05) 1px,transparent 1px);
+  background-size:66px 66px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 42%, #000 26%, transparent 76%);
+  mask-image:radial-gradient(ellipse at 50% 42%, #000 26%, transparent 76%)}
+.corner{position:absolute;width:50px;height:50px;border:2px solid rgba(34,211,238,.5);pointer-events:none;z-index:1;
+  box-shadow:0 0 22px -4px rgba(34,211,238,.5)}
+.c-tl{top:38px;left:38px;border-right:0;border-bottom:0}
+.c-tr{top:38px;right:38px;border-left:0;border-bottom:0}
+.c-bl{bottom:38px;left:38px;border-right:0;border-top:0}
+.c-br{bottom:38px;right:38px;border-left:0;border-top:0}
+.kicker,h1,h2,.big,.sub,.cover-sub,.rows,ul.bul,.split,.proofcard,.links,.tag-pill{position:relative;z-index:2}
+.brandmark,.foot,.full-img,.cap{z-index:3}
+.kicker::before{content:"";display:inline-block;width:28px;height:2px;background:#22d3ee;
+  margin-right:16px;vertical-align:middle;box-shadow:0 0 12px #22d3ee}
+h1.cover{background:linear-gradient(180deg,#ffffff,#b9cfe6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.big{background:linear-gradient(180deg,#ffffff,#c4d6ea);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1.cover .c,.big .c{background:linear-gradient(180deg,#7ef0ff,#22d3ee);-webkit-background-clip:text;background-clip:text;
+  color:transparent;filter:drop-shadow(0 0 30px rgba(34,211,238,.45))}
+h2::after{content:"";display:block;width:98px;height:4px;margin-top:22px;border-radius:3px;
+  background:linear-gradient(90deg,#22d3ee,rgba(34,211,238,0))}
+.split .txt h2::after{width:74px;margin-top:18px}
+.window{box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 0 1px rgba(34,211,238,.14),0 0 70px -12px rgba(34,211,238,.22)}
 """
 
-BRAND = '<div class="brandmark"><span class="b">&#10003;</span> Veritas</div>'
+BRAND = ('<div class="grid"></div>'
+         '<div class="corner c-tl"></div><div class="corner c-tr"></div>'
+         '<div class="corner c-bl"></div><div class="corner c-br"></div>'
+         '<div class="brandmark"><span class="b">&#10003;</span> Veritas</div>')
 HEAD = ('<!doctype html><html><head><meta charset="utf-8">'
         '<link rel="preconnect" href="https://fonts.googleapis.com">'
         '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">'
@@ -139,47 +167,64 @@ def aurora_proof():
 
 
 SLIDES = [
-    (4.6, cover("H0 &middot; Track 2 (B2B) &middot; Amazon Aurora PostgreSQL + Vercel",
+    (5.0, cover("H0 &middot; Track 2 (B2B) &middot; Amazon Aurora PostgreSQL + Vercel",
                 'VERI<span class="c">TAS</span>',
                 'The investigation platform where <span class="c">the AI never gets the final word.</span>')),
-    (6.0, full(data_uri(os.path.join(HERE, "architecture.png")),
-               "The pipeline: a Vercel front end, Amazon Aurora as the system of record, an engine worker behind a trust boundary.")),
-    (5.4, statement("The problem",
+    (6.5, full(data_uri(os.path.join(HERE, "architecture.png")),
+               "The system at a glance: a Vercel front end, Amazon Aurora as the system of record, an engine worker behind a trust boundary.")),
+
+    # ---- Q1: what problem, for whom, and why ----
+    (6.0, statement("Answering the brief &middot; 1 of 3",
+                    'What problem are we solving, and <span class="c">for whom?</span>',
+                    "(and why we chose it)")),
+    (7.5, statement("The problem",
                     'You can&rsquo;t ship an AI conclusion <span class="c">you can&rsquo;t audit.</span>',
-                    "In security, fraud, and compliance, an AI that occasionally hallucinates is worthless in front of a court, an insurer, or a regulator.")),
-    (5.4, statement("The idea",
-                    'So we flipped it. <span class="c">Deterministic code gets the final word.</span>',
-                    "An agent investigates end to end, but code (not the model) decides what is confirmed, and every finding traces by foreign key to the tool that proved it.")),
-    (8.5, criteria("How Veritas answers the brief", [
-        ("Technological", "A deliberate Aurora data model: FK chain-of-custody, a SHA-1 ON CONFLICT merge, ~19 real indexes, recursive CTEs, RLS, Serverless v2."),
-        ("Design", "A focused investigation console where the front end is designed around the data - the claim&rarr;fact&rarr;tool trace is the product."),
-        ("Impact", "SOC teams, DFIR firms, and insurers who can&rsquo;t trust hallucinating AI get an auditable, shippable system."),
-        ("Originality", "&lsquo;The AI never gets the final word&rsquo; isn&rsquo;t a slogan - it&rsquo;s an ai_overruled column and a foreign key you can query."),
-    ])),
-    (8.0, bullets("Why Amazon Aurora PostgreSQL", [
+                    "An agent can investigate evidence in minutes. But if it sometimes hallucinates, the verdict is worthless.")),
+    (7.5, statement("For whom",
+                    'For the people who must <span class="c">defend</span> the verdict.',
+                    "SOC analysts, DFIR consultancies, and incident-response insurers: anyone who has to stand behind an AI&rsquo;s conclusion in front of a client, an auditor, or a court.")),
+    (7.5, statement("Why this problem",
+                    'High-stakes work is adopting AI <span class="c">fastest.</span>',
+                    "And that is exactly where a hallucinated finding is unacceptable. So instead of asking you to trust the model, Veritas makes the trust provable.")),
+
+    # ---- Q2: footage of the working application ----
+    (5.5, statement("Answering the brief &middot; 2 of 3",
+                    'The <span class="c">working</span> application.',
+                    "Live and public, reading real data from Aurora.")),
+    (6.0, shot("Case dashboard", "Verdict, integrity, disposition.",
+               "A SHA-256 &lsquo;evidence unmodified&rsquo; badge - and the headline: the AI was overruled 4&times; by deterministic code.",
+               "veritas-rouge.vercel.app/case/&hellip;", data_uri(os.path.join(SHOTS, "02-dashboard.png")))),
+    (7.0, shot("The trust layer", "The AI proposed CONFIRMED. The code said SUSPICIOUS.",
+               "With the exact gate that withheld promotion. Nothing is silently dropped.",
+               "&hellip;/finding/F001", data_uri(os.path.join(SHOTS, "03-overruled-hero.png")))),
+    (6.0, shot("Proof chain", "Every claim &rarr; validated fact &rarr; source tool.",
+               "One finding_trace() query. The raw forensic-tool output is right there.",
+               "&hellip;/finding/F008", data_uri(os.path.join(SHOTS, "04-trace.png")))),
+    (6.0, shot("Cross-case pivot", "One indexed query across every case.",
+               "Type a hash, IP, or PID - Aurora returns every case it appears in. The file-based engine cannot.",
+               "&hellip;/pivot", data_uri(os.path.join(SHOTS, "05-pivot.png")))),
+    (5.5, shot("New investigation", "Postgres is the queue.",
+               "Enqueue a run; a worker claims it with SELECT FOR UPDATE SKIP LOCKED and streams 16-step progress.",
+               "&hellip;/runs", data_uri(os.path.join(SHOTS, "06-runs.png")))),
+
+    # ---- Q3: which AWS database, and how ----
+    (5.5, statement("Answering the brief &middot; 3 of 3",
+                    'Which <span class="c">AWS database</span>, and how?',
+                    "")),
+    (7.0, statement("The AWS database we used",
+                    'Amazon Aurora PostgreSQL <span class="c">Serverless v2.</span>',
+                    "The chain of custody IS the schema - and the front end on Vercel reads it directly, over SSL.")),
+    (8.5, bullets("How Aurora is used", [
         "<b>Foreign keys enforce the chain of custody</b> - a finding can&rsquo;t cite proof that doesn&rsquo;t exist.",
         "<b>A SHA-1 fact_signature UNIQUE</b> turns cross-tool corroboration into an ON CONFLICT merge.",
         "<b>The engine&rsquo;s ~19 pivot indexes become real Postgres indexes</b> (btree, GIN, pg_trgm).",
         "<b>A recursive CTE</b> walks the process tree; a materialized view powers cross-case pivots.",
         "<b>Serverless v2</b> scales down between investigations - about a dollar a day.",
     ])),
-    (5.2, shot("Case dashboard", "Verdict, integrity, disposition.",
-               "A SHA-256 &lsquo;evidence unmodified&rsquo; badge - and the headline: the AI was overruled 4&times; by deterministic code.",
-               "veritas-rouge.vercel.app/case/&hellip;", data_uri(os.path.join(SHOTS, "02-dashboard.png")))),
-    (6.0, shot("The trust layer", "The AI proposed CONFIRMED. The code said SUSPICIOUS.",
-               "With the exact gate that withheld promotion. Nothing is silently dropped.",
-               "&hellip;/finding/F001", data_uri(os.path.join(SHOTS, "03-overruled-hero.png")))),
-    (5.4, shot("Proof chain", "Every claim &rarr; validated fact &rarr; source tool.",
-               "One finding_trace() query. The raw forensic-tool output is right there.",
-               "&hellip;/finding/F008", data_uri(os.path.join(SHOTS, "04-trace.png")))),
-    (5.4, shot("Cross-case pivot", "One indexed query across every case.",
-               "Type a hash, IP, or PID - Aurora returns every case it appears in. The file-based engine cannot.",
-               "&hellip;/pivot", data_uri(os.path.join(SHOTS, "05-pivot.png")))),
-    (5.0, shot("New investigation", "Postgres is the queue.",
-               "Enqueue a run; a worker claims it with SELECT FOR UPDATE SKIP LOCKED and streams 16-step progress.",
-               "&hellip;/runs", data_uri(os.path.join(SHOTS, "06-runs.png")))),
-    (5.4, aurora_proof()),
-    (5.2, cover("", 'The AI never gets <span class="c">the final word.</span>',
+    (6.5, aurora_proof()),
+
+    # ---- close ----
+    (6.0, cover("", 'The AI never gets <span class="c">the final word.</span>',
                 '<span class="links"><span class="u">veritas-rouge.vercel.app</span> &middot; github.com/3sk1nt4n/veritas</span>'
                 '<br><span class="tag-pill">#H0Hackathon</span>')),
 ]
@@ -211,14 +256,22 @@ def stitch(pngs):
         inputs += ["-loop", "1", "-t", f"{d}", "-i", p]
     fc = []
     for i in range(len(pngs)):
-        fc.append(f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=decrease,"
-                  f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=0x070a10,setsar=1,fps={FPS},format=yuv420p[v{i}]")
+        # gentle Ken Burns zoom-in (subtle so text never clips), on a guaranteed 1080p frame
+        fc.append(
+            f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=decrease,"
+            f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=0x070a10,setsar=1,fps={FPS},"
+            f"zoompan=z='min(zoom+0.00020,1.035)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W}x{H},"
+            f"format=yuv420p[v{i}]")
+    TRANS = ["fade", "dissolve", "smoothleft", "fade", "dissolve", "smoothright",
+             "fade", "dissolve", "wipeleft", "fade", "dissolve", "smoothleft",
+             "fade", "dissolve", "fade", "dissolve"]
     prev = "v0"
     cumulative = durs[0]
     for i in range(1, len(pngs)):
         offset = cumulative - XFADE
         out = f"x{i}"
-        fc.append(f"[{prev}][v{i}]xfade=transition=fade:duration={XFADE}:offset={offset:.3f}[{out}]")
+        tr = TRANS[(i - 1) % len(TRANS)]
+        fc.append(f"[{prev}][v{i}]xfade=transition={tr}:duration={XFADE}:offset={offset:.3f}[{out}]")
         cumulative += durs[i] - XFADE
         prev = out
     filtergraph = ";".join(fc)
