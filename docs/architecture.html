@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1440px; height: 1020px; padding: 44px 52px;
+    font-family: "Inter", system-ui, sans-serif; color: #e6edf6;
+    background:
+      radial-gradient(1100px 500px at 82% -8%, rgba(34,211,238,.10), transparent 60%),
+      radial-gradient(800px 460px at 0% 0%, rgba(167,139,250,.08), transparent 55%),
+      #070a10;
+  }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  h1 { font-size: 30px; font-weight: 700; letter-spacing: -.5px; }
+  h1 .c { color: #22d3ee; }
+  .sub { color: #8597b3; font-size: 15px; margin-top: 6px; }
+  .row { display: flex; align-items: stretch; gap: 26px; margin-top: 30px; }
+  .box { border: 1px solid #1e2a40; border-radius: 14px; background: rgba(15,22,35,.75);
+         padding: 18px 20px; box-shadow: 0 14px 40px -22px #000; }
+  .box.brand { border-color: rgba(34,211,238,.4); box-shadow: 0 0 0 1px rgba(34,211,238,.12), 0 14px 50px -20px rgba(34,211,238,.25); }
+  .box.aurora { border-color: rgba(34,211,238,.45); background: rgba(11,30,40,.6); }
+  .box.engine { border-color: rgba(167,139,250,.4); background: rgba(20,16,40,.5); }
+  .tag { font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; color: #8597b3; }
+  .title { font-size: 18px; font-weight: 600; margin-top: 4px; }
+  .desc { font-size: 13px; color: #aab8cf; margin-top: 6px; line-height: 1.5; }
+  .col { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+  .arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #22d3ee; min-width: 92px; }
+  .arrow .lab { font-size: 11px; color: #8597b3; text-align: center; margin-bottom: 4px; }
+  .arrow .ln { font-size: 26px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .chip { border: 1px solid #1e2a40; background: rgba(20,29,43,.8); border-radius: 7px;
+          padding: 4px 8px; font-size: 11.5px; color: #aab8cf; }
+  .chip.k { color: #67e8f9; border-color: rgba(34,211,238,.25); background: rgba(34,211,238,.06); }
+  .idx { color: #67e8f9; font-weight: 600; }
+  .boundary { margin-top: 30px; border: 1px dashed rgba(167,139,250,.5); border-radius: 12px;
+              padding: 14px 18px; background: rgba(167,139,250,.05); font-size: 13.5px; color: #c9bdf3; }
+  .boundary b { color: #fff; }
+  .foot { position: absolute; bottom: 30px; left: 52px; right: 52px; display:flex; justify-content: space-between;
+          font-size: 12px; color:#6b7d99; }
+</style>
+</head>
+<body>
+  <h1>Veritas <span class="c">— architecture</span></h1>
+  <div class="sub">Chain-of-custody for AI investigations · front end on Vercel · data of record in Amazon Aurora PostgreSQL (Serverless v2)</div>
+
+  <!-- read path -->
+  <div class="row">
+    <div class="box col" style="flex:1.05">
+      <div class="tag">Analyst</div>
+      <div class="title">Browser</div>
+      <div class="desc">Dashboards, findings, the claim→fact→tool trace, cross-case IOC pivot.</div>
+    </div>
+    <div class="arrow"><div class="lab">HTTPS</div><div class="ln">→</div></div>
+    <div class="box brand col" style="flex:1.25">
+      <div class="tag">Web tier · Vercel</div>
+      <div class="title">Next.js 15 (App Router)</div>
+      <div class="desc">Server components query Aurora directly. Read screens need zero Python at request time.</div>
+      <div class="chips"><span class="chip">Server Components</span><span class="chip">Route Handlers</span><span class="chip">v0-built UI</span></div>
+    </div>
+    <div class="arrow"><div class="lab">pooled SQL<br/>RDS Proxy / Data API</div><div class="ln">→</div></div>
+    <div class="box aurora col" style="flex:1.5">
+      <div class="tag">Data of record</div>
+      <div class="title">Amazon Aurora PostgreSQL · Serverless v2</div>
+      <div class="desc">Deliberate, normalized chain-of-custody model + the engine's pivot indexes as real DB indexes.</div>
+      <div class="chips">
+        <span class="chip k">cases</span><span class="chip k">evidence_sources</span><span class="chip k">tool_runs</span>
+        <span class="chip k">facts · JSONB + <span class="idx">~19 idx</span></span><span class="chip k">findings</span>
+        <span class="chip k">claims</span><span class="chip">audit ledger</span><span class="chip">fact_entity_pivot · matview</span>
+        <span class="chip">pg_trgm · GIN</span><span class="chip">RLS by org_id</span><span class="chip">recursive CTEs</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- write / new-run path -->
+  <div class="row">
+    <div class="box col" style="flex:1.05">
+      <div class="tag">New investigation</div>
+      <div class="title">Enqueue (Vercel)</div>
+      <div class="desc mono" style="font-size:12px">INSERT INTO runs_queue (status='queued')</div>
+    </div>
+    <div class="arrow"><div class="lab">claim job<br/><span class="mono">SKIP LOCKED</span></div><div class="ln">←</div></div>
+    <div class="box engine col" style="flex:1.25">
+      <div class="tag">Engine worker · ECS / EC2</div>
+      <div class="title">Sentinel Ensemble (16-step)</div>
+      <div class="desc">MCP server · 181 typed forensic tools · 4-model ensemble · deterministic trust layer.</div>
+      <div class="chips"><span class="chip">reads evidence ← Amazon S3</span><span class="chip">ingest adapter → Aurora</span></div>
+    </div>
+    <div class="arrow"><div class="lab">UPSERT validated<br/>facts/findings</div><div class="ln">→</div></div>
+    <div class="box aurora col" style="flex:1.5; align-items:center; justify-content:center">
+      <div class="title" style="text-align:center">ON CONFLICT (fact_signature)<br/>signature merge</div>
+      <div class="desc" style="text-align:center">Only deterministically validated facts ever land here.</div>
+    </div>
+  </div>
+
+  <div class="boundary">
+    <b>Trust boundary.</b> Raw evidence and raw model output never reach the web tier or the database —
+    only facts that cleared the deterministic disposition gates cross into Aurora. The AI proposes; code decides; every row traces to the tool that proved it.
+  </div>
+
+  <div class="foot"><span>github.com/3sk1nt4n · Veritas</span><span>H0 · Track 2 (B2B) · AWS Database: Amazon Aurora PostgreSQL</span></div>
+</body>
+</html>

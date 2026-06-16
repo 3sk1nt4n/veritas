@@ -86,8 +86,9 @@ runs_queue (Aurora)  <--SELECT FOR UPDATE SKIP LOCKED--  Sentinel Ensemble engin
 - [x] Aurora schema (deliberate, normalized + JSONB, ~19 indexes, RLS, matview, recursive functions)
 - [x] Ingest adapter (real captures -> Postgres, count-fidelity gate, signature merge)
 - [x] Trust-layer demo queries (overrule / trace / cross-case pivot / recursion / merge)
-- [ ] Next.js app on Vercel (dashboard, findings grid, trace tree, IOC pivot, timeline)
-- [ ] Async new-run worker + S3 + auth
-- [ ] Aurora deploy + submission artifacts (video, diagram, console screenshot)
+- [x] Next.js console on Vercel (dashboard, findings grid, trace-tree hero, IOC pivot, new-run)
+- [x] Async new-run worker (Postgres queue + `SELECT FOR UPDATE SKIP LOCKED`) + live progress
+- [x] Architecture diagram + submission text + demo script (`docs/`)
+- [ ] Aurora deploy + record video + submit — **your steps:** [`docs/YOUR-STEPS.md`](docs/YOUR-STEPS.md)
 
 MIT License. Built on [Sentinel Ensemble](https://github.com/3sk1nt4n/Sentinel-Ensemble).
