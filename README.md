@@ -1,97 +1,85 @@
-# Veritas - the investigation platform where the AI never gets the final word
+# Veritas
 
-> H0: Hack the Zero Stack with Vercel v0 and AWS Databases
-> Track 2 (Monetizable B2B) - AWS database: **Amazon Aurora PostgreSQL (Serverless v2)**
->
-> **▶ Live demo (public, no login): https://veritas-rouge.vercel.app**
+### The investigation platform where the AI never gets the final word.
 
-Veritas turns an autonomous AI security investigation into a **court-defensible,
-queryable record**. An AI agent investigates digital evidence end to end, but
-**deterministic code - not the model - decides what is "confirmed,"** and every
-finding traces, by foreign key, back to the exact tool record that proved it.
-When the model over-calls a threat, Veritas overrules it and shows you the gate
-that withheld promotion.
+[![Live demo](https://img.shields.io/badge/Live%20demo-veritas--rouge.vercel.app-22d3ee?style=for-the-badge)](https://veritas-rouge.vercel.app)
+[![AWS](https://img.shields.io/badge/Amazon%20Aurora-PostgreSQL%20Serverless%20v2-ff9d3d?style=for-the-badge)](https://aws.amazon.com/rds/aurora/)
+[![Vercel](https://img.shields.io/badge/Front%20end-Next.js%20on%20Vercel-ff4d8d?style=for-the-badge)](https://vercel.com)
+[![License](https://img.shields.io/badge/License-MIT-e879f9?style=for-the-badge)](LICENSE)
 
-The hard problem in high-stakes AI is trust: you cannot ship conclusions you
-cannot audit. Veritas is the trust layer - built on a deliberate Aurora data
-model that makes the chain of custody a single SQL query.
+> **H0: Hack the Zero Stack with Vercel v0 and AWS Databases** - Track 2 (Monetizable B2B)
+> AWS database: **Amazon Aurora PostgreSQL (Serverless v2)** - Front end: **Next.js on Vercel**
 
-## Why Aurora PostgreSQL
+Veritas turns an autonomous AI security investigation into a court-defensible, queryable record.
+An agent investigates digital evidence end to end, but **deterministic code, not the model, decides
+what is "confirmed,"** and **every finding traces by foreign key to the exact tool record that proved
+it.** When the model over-calls a threat, Veritas overrules it and shows the gate that withheld promotion.
 
-The domain is a naturally normalized, join-heavy chain:
+**Live, public, no login: https://veritas-rouge.vercel.app**
 
-```
-org -> case -> evidence_source -> tool_run -> fact
-        case -> finding --(fact_refs)--> fact -> source tool
-```
+---
 
-- **Foreign keys enforce chain-of-custody integrity** - the product's core promise.
-- **`UNIQUE(case_id, fact_signature)`** turns the engine's in-memory SHA1 fact
-  dedup into an idempotent **`ON CONFLICT` UPSERT** (tools unioned, `merge_count++`).
-- The engine's ~19 in-memory pivot indexes (by_pid, by_hash, by_ip,
-  by_registry_path, ...) become **~19 real Postgres indexes** (btree + GIN +
-  `pg_trgm`), so cross-case IOC hunting is one indexed query the file-based
-  engine cannot do.
-- A **recursive CTE** walks the process tree server-side; a `finding_trace()`
-  function returns the full proof chain behind any finding.
+## Architecture
 
-See [`db/schema.sql`](db/schema.sql) and the demo queries in
-[`db/demo_queries.sql`](db/demo_queries.sql).
+![Veritas architecture](docs/architecture.png)
+
+## End-to-end pipeline
+
+![Veritas pipeline](docs/pipeline.png)
+
+## Project structure
+
+![Veritas project structure](docs/structure.png)
+
+---
+
+## Why Amazon Aurora PostgreSQL
+
+The domain is a naturally normalized, join-heavy chain of custody, and the data model is the product:
+
+- **Foreign keys enforce chain-of-custody integrity** - a finding cannot reference proof that does not exist.
+- **`UNIQUE(case_id, fact_signature)`** turns the engine's in-memory SHA1 dedup into an idempotent
+  **`ON CONFLICT` UPSERT** - cross-tool corroboration merges in one statement.
+- The engine's **~19 pivot indexes become real Postgres indexes** (btree, GIN on JSONB, `pg_trgm` for
+  fuzzy IOC search), so cross-case hunting is one indexed query the file-based engine cannot do.
+- A **recursive CTE** walks the process tree; a `finding_trace()` function returns the full proof chain.
+- **Row-level security by `org_id`** makes it multi-tenant SaaS-ready; a **materialized view** powers the
+  cross-case pivot; **Serverless v2** scales down between investigations.
+
+DynamoDB was considered and rejected (19 pivot indexes would need 5+ GSIs, conditional-write merges, and an
+N+1 join storm). Aurora DSQL was rejected for the build window (no `pg_trgm`). See [`db/schema.sql`](db/schema.sql)
+and [`db/demo_queries.sql`](db/demo_queries.sql).
 
 ## The data is real
 
-Veritas ingests completed runs of the open-source **Sentinel Ensemble** DFIR
-engine. No metrics here are invented: the seed cases are real investigations of a
-Windows intrusion (PsExec / PWDumpX credential theft). The ingest adapter asserts
-that the database disposition counts match the engine's output exactly.
+Every case is an actual investigation of a Windows intrusion, ingested from the open-source
+[Sentinel Ensemble](https://github.com/3sk1nt4n/Sentinel-Ensemble) engine. No numbers are invented: the
+ingest adapter asserts the database disposition counts match the engine output exactly.
 
-## Local development (no AWS needed to build)
+## Run it locally (no AWS needed to build)
 
 ```bash
 # 1. Postgres (local stand-in for Aurora)
 sudo docker run -d --name veritas-pg -e POSTGRES_PASSWORD=veritas \
   -e POSTGRES_DB=veritas -p 5433:5432 postgres:16
 
-# 2. schema
+# 2. schema + ingest a captured run
 sudo docker exec -i veritas-pg psql -U postgres -d veritas < db/schema.sql
-
-# 3. ingest a captured run (findings-backed fact subset only)
 python -m venv .venv && . .venv/bin/activate && pip install ijson "psycopg[binary]"
 DATABASE_URL=postgresql://postgres:veritas@localhost:5433/veritas \
   python ingest/ingest.py <capture_dir> --case-name "rd01 (opus)"
 
-# 4. the queries that are the demo
-sudo docker exec -i veritas-pg psql -U postgres -d veritas < db/demo_queries.sql
+# 3. the web app
+cd web && npm install && DATABASE_URL=postgresql://postgres:veritas@localhost:5433/veritas npm run dev
 ```
 
-Going to Aurora is a connection-string swap (plus RDS Proxy / Data API for
-Vercel's serverless connection pooling).
+Going to Aurora is a connection-string swap (`DATABASE_URL` + `PGSSL=require`).
 
-## Architecture
+## Submission
 
-```
-Browser (analyst)
-   |
-   v
-Next.js on Vercel  --reads-->  RDS Proxy / Aurora Data API  -->  Amazon Aurora PostgreSQL (Serverless v2)
-   |                                                               cases, evidence_sources, tool_runs,
-   | enqueue new run                                               facts (JSONB + ~19 indexes), findings,
-   v                                                               claims, audit tables, fact_entity_pivot
-runs_queue (Aurora)  <--SELECT FOR UPDATE SKIP LOCKED--  Sentinel Ensemble engine worker (ECS/EC2)
-                                                              ^-- reads evidence from Amazon S3
-   Trust boundary: raw evidence + raw model output stay engine-side; only
-   deterministically validated facts/findings cross into Aurora.
-```
-
-## Status
-
-- [x] Aurora schema (deliberate, normalized + JSONB, ~19 indexes, RLS, matview, recursive functions)
-- [x] Ingest adapter (real captures -> Postgres, count-fidelity gate, signature merge)
-- [x] Trust-layer demo queries (overrule / trace / cross-case pivot / recursion / merge)
-- [x] Next.js console on Vercel (dashboard, findings grid, trace-tree hero, IOC pivot, new-run)
-- [x] Async new-run worker (Postgres queue + `SELECT FOR UPDATE SKIP LOCKED`) + live progress
-- [x] Architecture diagram + submission text + demo script (`docs/`)
-- [x] **Live on Vercel + Aurora:** https://veritas-rouge.vercel.app (public, real cloud data)
-- [ ] Record demo video + RDS console screenshot + submit - [`docs/YOUR-STEPS.md`](docs/YOUR-STEPS.md)
+- **Live app:** https://veritas-rouge.vercel.app
+- **Demo video:** [`docs/veritas-demo.mp4`](docs/veritas-demo.mp4) (YouTube link at submission)
+- **Submission text:** [`docs/SUBMISSION.md`](docs/SUBMISSION.md)
+- **Architecture / pipeline / structure:** [`docs/`](docs/)
 
 MIT License. Built on [Sentinel Ensemble](https://github.com/3sk1nt4n/Sentinel-Ensemble).
