@@ -2,6 +2,8 @@
 
 > H0: Hack the Zero Stack with Vercel v0 and AWS Databases
 > Track 2 (Monetizable B2B) - AWS database: **Amazon Aurora PostgreSQL (Serverless v2)**
+>
+> **▶ Live demo (public, no login): https://veritas-rouge.vercel.app**
 
 Veritas turns an autonomous AI security investigation into a **court-defensible,
 queryable record**. An AI agent investigates digital evidence end to end, but
@@ -89,6 +91,7 @@ runs_queue (Aurora)  <--SELECT FOR UPDATE SKIP LOCKED--  Sentinel Ensemble engin
 - [x] Next.js console on Vercel (dashboard, findings grid, trace-tree hero, IOC pivot, new-run)
 - [x] Async new-run worker (Postgres queue + `SELECT FOR UPDATE SKIP LOCKED`) + live progress
 - [x] Architecture diagram + submission text + demo script (`docs/`)
-- [ ] Aurora deploy + record video + submit — **your steps:** [`docs/YOUR-STEPS.md`](docs/YOUR-STEPS.md)
+- [x] **Live on Vercel + Aurora:** https://veritas-rouge.vercel.app (public, real cloud data)
+- [ ] Record demo video + RDS console screenshot + submit — [`docs/YOUR-STEPS.md`](docs/YOUR-STEPS.md)
 
 MIT License. Built on [Sentinel Ensemble](https://github.com/3sk1nt4n/Sentinel-Ensemble).

@@ -3,6 +3,8 @@
 **Track:** 2 — Monetizable B2B
 **AWS Database used:** **Amazon Aurora PostgreSQL (Serverless v2)**
 **Front end:** Next.js on Vercel / v0
+**Live app:** https://veritas-rouge.vercel.app
+**Repo:** https://github.com/3sk1nt4n/veritas
 
 ---
 
