@@ -18,3 +18,6 @@ out/
 run-captures/
 *.evidence_db.json
 local-data/
+
+# video working frames (the final docs/veritas-demo.mp4 is committed)
+docs/video_build/
