@@ -1,0 +1,20 @@
+# python
+.venv/
+__pycache__/
+*.pyc
+
+# node / next
+node_modules/
+.next/
+out/
+.vercel/
+
+# secrets / env
+.env
+.env.*
+!.env.example
+
+# local data / large artifacts (never commit evidence or 300MB fact dumps)
+run-captures/
+*.evidence_db.json
+local-data/
