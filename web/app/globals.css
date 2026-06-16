@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html, body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(34, 211, 238, 0.06), transparent 60%),
+    radial-gradient(900px 500px at 0% 0%, rgba(167, 139, 250, 0.05), transparent 55%),
+    #070a10;
+  color: #e6edf6;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .panel {
+    @apply rounded-xl border border-line bg-ink-850/70 backdrop-blur-sm shadow-panel;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-md border border-line bg-ink-800/80 px-2 py-0.5 text-xs text-haze;
+  }
+  .mono { font-family: var(--font-mono); }
+  .kbd {
+    @apply rounded border border-line bg-ink-800 px-1.5 py-0.5 text-[11px] text-haze mono;
+  }
+  .link-ghost { @apply text-haze transition-colors hover:text-white; }
+  .stat-num { @apply text-3xl font-semibold tracking-tight tabular-nums; }
+}
+
+/* thin custom scrollbars to match the console feel */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: #1c2740; border-radius: 8px; border: 2px solid #070a10; }
+*::-webkit-scrollbar-track { background: transparent; }
