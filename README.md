@@ -51,7 +51,8 @@ The domain is a naturally normalized, join-heavy chain of custody, and the data 
 - The engine's **~19 pivot indexes become real Postgres indexes** (btree, GIN on JSONB, `pg_trgm` for
   fuzzy IOC search), so cross-case hunting is one indexed query the file-based engine cannot do.
 - A **recursive CTE** walks the process tree; a `finding_trace()` function returns the full proof chain.
-- **Row-level security by `org_id`** makes it multi-tenant SaaS-ready; a **materialized view** powers the
+- **Row-level security by `org_id`** is scaffolded in the schema (it flips the app to multi-tenant SaaS the
+  moment auth is turned on; the public demo runs open by design); a **materialized view** powers the
   cross-case pivot; **Serverless v2** scales down between investigations.
 
 DynamoDB was considered and rejected (19 pivot indexes would need 5+ GSIs, conditional-write merges, and an

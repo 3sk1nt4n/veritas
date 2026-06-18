@@ -5,6 +5,9 @@
 **Front end:** Next.js on Vercel / v0
 **Live app:** https://veritas-rouge.vercel.app
 **Repo:** https://github.com/3sk1nt4n/veritas
+**Demo video (YouTube):** _paste link at submission_
+**Vercel Team ID:** _paste from Vercel -> Settings -> General at submission_
+**AWS proof screenshot:** [`docs/assets/rds.png`](assets/rds.png) - the live `veritas-db` Aurora Serverless v2 cluster in the AWS RDS console
 
 ---
 
@@ -54,6 +57,11 @@ traces to proof is worth far more than an unauditable AI guess that a court,
 insurer, or auditor will throw out. The same trust layer can also be licensed as
 an API that any AI investigation product embeds.
 
+Go-to-market: a free single-analyst tier (the live public app) lands the wedge,
+per-seat team plans expand inside IR firms, and an enterprise tier (private VPC,
+SSO, active org-scoped RLS) closes regulated buyers. The audit a court or insurer
+already demands is the reason to pay.
+
 ## Why Amazon Aurora PostgreSQL - and how it is integrated
 
 The domain is a naturally normalized, join-heavy chain of custody:
@@ -76,14 +84,28 @@ Aurora is not a checkbox here; the data model is the product:
   indexed query the file-based engine cannot do.
 - A **recursive CTE** walks the process tree server-side; a `finding_trace()`
   function returns the full proof chain.
-- **Row-level security by `org_id`** makes it multi-tenant SaaS-ready; a
-  **materialized view** powers the cross-case pivot; **Serverless v2** scales to
-  zero between investigations.
+- **Row-level security by `org_id`** is scaffolded in the schema - it flips the
+  app to multi-tenant SaaS the moment auth is turned on (the public demo runs
+  open by design); a **materialized view** powers the cross-case pivot; and
+  **Serverless v2** scales to zero between investigations.
 
 DynamoDB was considered and rejected: the 19 pivot indexes would need 5+ GSIs
 with multiplying cost, the signature merge needs conditional writes, and the
 finding→claims→facts→tool joins are an N+1 read storm. Aurora DSQL was rejected
 for the build window (no `pg_trgm`); a single primary region is right for this.
+
+## Why existing tools cannot do this
+
+| | File-based forensic engines | AI investigation copilots | Veritas |
+|---|---|---|---|
+| Verdict authority | the analyst | the model | **deterministic code, in SQL** |
+| Proof for a claim | manual cross-ref | prose, untraceable | **foreign key to the tool record** |
+| Cross-case IOC pivot | grep, per case | none | **one indexed Aurora query** |
+| Corroboration across tools | manual | none | **`ON CONFLICT` signature merge** |
+
+EnCase, Axiom, and Velociraptor prove facts but never reason; AI copilots reason
+but cannot prove. Veritas is the one place the reasoning is itself provable: the
+override is a column, the proof is a join, the corroboration is a merge.
 
 ## How we built it
 

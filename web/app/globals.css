@@ -31,6 +31,13 @@ html, body {
   .stat-num { @apply text-3xl font-semibold tracking-tight tabular-nums; }
 }
 
+/* visible keyboard focus for accessibility */
+@layer base {
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    @apply outline-none ring-2 ring-brand/70 ring-offset-2 ring-offset-ink-950;
+  }
+}
+
 /* thin custom scrollbars to match the console feel */
 *::-webkit-scrollbar { width: 10px; height: 10px; }
 *::-webkit-scrollbar-thumb { background: #1c2740; border-radius: 8px; border: 2px solid #070a10; }

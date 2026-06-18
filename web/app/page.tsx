@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { listCases, globalStats, type CaseRow } from "@/lib/queries";
-import { Stat, VERDICT_META } from "@/components/ui";
+import { listCases, globalStats, BUCKETS, type CaseRow } from "@/lib/queries";
+import { Stat, VERDICT_META, BUCKET_META } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +30,16 @@ export default async function Home() {
           <Stat label="Findings" value={stats?.findings ?? 0} />
           <Stat label="AI overruled by code" value={stats?.overruled ?? 0} accent />
           <Stat label="Forensic tools" value={stats?.tools ?? 0} />
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-haze">
+          <span className="uppercase tracking-wide opacity-70">Disposition key</span>
+          {BUCKETS.map((b) => (
+            <span key={b} className="inline-flex items-center gap-1.5">
+              <span className={`h-1.5 w-1.5 rounded-full ${BUCKET_META[b].dot}`} />
+              {BUCKET_META[b].label}
+            </span>
+          ))}
         </div>
       </section>
 
