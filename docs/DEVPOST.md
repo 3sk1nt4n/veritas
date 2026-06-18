@@ -101,7 +101,10 @@ https://veritas-rouge.vercel.app
 https://github.com/3sk1nt4n/veritas
 ```
 
-**2.6 Video link:** paste the YouTube URL from Step 1.
+**2.6 Video link:**
+```
+https://youtu.be/FFDDwCKO95g
+```
 
 **2.7 Gallery image / thumbnail:** upload `docs/poster.png`.
 
