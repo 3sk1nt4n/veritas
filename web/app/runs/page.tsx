@@ -16,10 +16,11 @@ export default async function RunsPage() {
       <section>
         <h1 className="text-xl font-semibold tracking-tight text-white">Queue a new investigation</h1>
         <p className="mt-1 max-w-2xl text-sm text-haze">
-          Submitting enqueues a job in Aurora. An off-Vercel worker claims it with{" "}
-          <code className="mono">SELECT … FOR UPDATE SKIP LOCKED</code>, runs the 16-step Sentinel
-          Ensemble pipeline, and ingests only deterministically validated facts back into Aurora.
-          Evidence never touches the web tier. Progress below updates live.
+          Submitting enqueues a job in Aurora. A worker claims it with{" "}
+          <code className="mono">SELECT … FOR UPDATE SKIP LOCKED</code>, drives the 16-step Sentinel
+          Ensemble pipeline, and links only deterministically validated facts back into Aurora.
+          Evidence never touches the web tier. Progress below updates live - the queue self-drains
+          on this demo; in production an off-Vercel engine worker runs the real pipeline.
         </p>
       </section>
       <RunsLive initial={runs} />

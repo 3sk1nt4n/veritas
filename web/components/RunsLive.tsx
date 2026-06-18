@@ -35,7 +35,13 @@ export function RunsLive({ initial }: { initial: Run[] }) {
     try {
       const r = await fetch("/api/runs", { cache: "no-store" });
       const j = await r.json();
-      setRuns(j.runs ?? []);
+      const next: Run[] = j.runs ?? [];
+      setRuns(next);
+      // Drive the serverless queue-driver while anything is in flight so the
+      // Postgres-as-queue self-drains on the live site with no off-Vercel worker.
+      if (next.some((x) => x.status === "queued" || x.status === "claimed" || x.status === "running")) {
+        fetch("/api/worker/tick", { method: "POST", cache: "no-store" }).catch(() => {});
+      }
     } catch { /* ignore transient */ }
   }, []);
 
