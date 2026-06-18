@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 WORK = os.path.join(bv.BUILD, "narr")
 OUT = os.path.join(HERE, "veritas-demo-narrated.mp4")
 SILENT = "/tmp/veritas_silent.mp4"
-LEAD, TAIL, FLOOR = 0.35, 0.4, 3.0
+LEAD, TAIL, FLOOR = 0.45, 0.55, 3.0
 
 dur = json.load(open(os.path.join(WORK, "durations.json")))
 assert len(dur) == len(bv.SLIDES), f"{len(dur)} durations vs {len(bv.SLIDES)} slides"
@@ -22,6 +22,41 @@ assert len(dur) == len(bv.SLIDES), f"{len(dur)} durations vs {len(bv.SLIDES)} sl
 # 1. narration drives each slide's duration
 for i, s in enumerate(bv.SLIDES):
     s["dur"] = max(FLOOR, LEAD + dur[str(i)] + TAIL)
+
+# 1b. Crossfades compress the visual timeline while each slide keeps its full
+# narration length, so a multi-reveal slide's voiceover can run into the next
+# slide's line (two voices at once). Grow offending slides until every pair of
+# consecutive narration clips is separated by at least MIN_GAP of clean silence.
+# ~1s gives a full beat of breathing room between slides (no rushed back-to-back
+# lines) and lets the 1s visual crossfade play out entirely during the pause.
+MIN_GAP = 1.0
+
+def _slide_starts():
+    f = bv.plan_clips()
+    st = [0.0] * len(f)
+    run = f[0]["dur"]
+    for k in range(1, len(f)):
+        e = f[k]["edge"][1]
+        st[k] = run - e
+        run += f[k]["dur"] - e
+    ss = {}
+    for idx, c in enumerate(f):
+        if c["j"] == 0:
+            ss[c["si"]] = st[idx]
+    return ss, run
+
+for _ in range(40):
+    ss, _tot = _slide_starts()
+    changed = False
+    for i in range(len(bv.SLIDES) - 1):
+        vo_end = ss[i] + LEAD + dur[str(i)]
+        nxt_start = ss[i + 1] + LEAD
+        gap = nxt_start - vo_end
+        if gap < MIN_GAP:
+            bv.SLIDES[i]["dur"] += (MIN_GAP - gap) + 0.02
+            changed = True
+    if not changed:
+        break
 
 # 2. plan clips; reuse existing slide PNGs (content unchanged), render only if missing
 flat = bv.plan_clips()

@@ -1,8 +1,9 @@
 import { Pool } from "pg";
 
 // One pooled connection per server runtime. Works against local Postgres and,
-// in production, against Amazon Aurora through RDS Proxy / the Data API endpoint
-// (same connection string; set PGSSL=require for Aurora).
+// in production, against Amazon Aurora over SSL via a direct pooled connection
+// (set PGSSL=require for Aurora). RDS Proxy / the Data API are a drop-in upgrade
+// behind the same connection string.
 const globalForPg = globalThis as unknown as { __veritasPool?: Pool };
 
 const CONN =

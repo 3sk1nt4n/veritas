@@ -1,5 +1,9 @@
 # Veritas - demo video script (target 2:45, hard cap 3:00)
 
+> Note: the SHIPPED demo is the rendered, narrated slide deck at
+> `docs/veritas-demo-narrated.mp4` (runtime ~2:41, neural voiceover). This file
+> is the original recording plan / narration reference behind it.
+
 Record at 1440-wide, dark room, screen capture + voiceover. Use the live app
 (pre-ingested data - never run the slow pipeline on camera). Have these tabs open:
 the app, a `psql` window into Aurora, and the AWS Aurora console.

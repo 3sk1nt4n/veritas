@@ -17,7 +17,7 @@ it.** When the model over-calls a threat, Veritas overrules it and shows the gat
 
 **Live, public, no login: https://veritas-rouge.vercel.app**
 
-## Demo (narrated, 2:19)
+## Demo (narrated, 2:41)
 
 [![Watch the Veritas demo](docs/poster.png)](docs/veritas-demo-narrated.mp4)
 
@@ -86,7 +86,7 @@ Going to Aurora is a connection-string swap (`DATABASE_URL` + `PGSSL=require`).
 ## Submission
 
 - **Live app:** https://veritas-rouge.vercel.app
-- **Demo video:** [`docs/veritas-demo-narrated.mp4`](docs/veritas-demo-narrated.mp4) - narrated, 2:19 (YouTube link at submission). Silent cut: [`docs/veritas-demo.mp4`](docs/veritas-demo.mp4).
+- **Demo video:** [`docs/veritas-demo-narrated.mp4`](docs/veritas-demo-narrated.mp4) - narrated, 2:41 (YouTube link at submission). Silent cut: [`docs/veritas-demo.mp4`](docs/veritas-demo.mp4).
 - **Submission text:** [`docs/SUBMISSION.md`](docs/SUBMISSION.md)
 - **Architecture / pipeline / structure:** [`docs/`](docs/)
 

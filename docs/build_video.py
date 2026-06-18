@@ -23,8 +23,8 @@ os.makedirs(BUILD, exist_ok=True)
 
 CHROMIUM = "chromium"
 W, H, FPS = 1920, 1080, 30
-XFADE = 0.7      # between slides
-REVEAL = 0.45    # between states within a slide
+XFADE = 1.0      # between slides (longer = gentler, premium crossfade)
+REVEAL = 0.6     # between states within a slide (softer staged reveals)
 STEP = 0.9       # visible time per intermediate reveal state
 
 
@@ -283,8 +283,10 @@ SLIDES = [
             '<br><span class="tag-pill">#H0Hackathon</span>')]},
 ]
 
+# All-gentle set: only soft fades / cross-dissolves / gradient smooth-wipes,
+# no hard-edged wipes - reads as one continuous, premium motion.
 TRANS = ["fade", "dissolve", "smoothleft", "fade", "dissolve", "smoothright",
-         "fade", "dissolve", "wipeleft", "fade", "dissolve", "smoothleft",
+         "fade", "dissolve", "smoothleft", "fade", "dissolve", "smoothright",
          "fade", "dissolve", "fade", "dissolve"]
 
 

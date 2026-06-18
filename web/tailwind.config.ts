@@ -5,7 +5,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // investigation-console palette
+        // investigation-console palette - VulnPilot identity on a dark base:
+        // orange brand + slate structure (their light theme adapted to dark).
         ink: {
           950: "#070a10",
           900: "#0b0f17",
@@ -15,21 +16,24 @@ const config: Config = {
           600: "#26324f",
         },
         line: "#1e2a40",
-        haze: "#8597b3",
-        brand: { DEFAULT: "#22d3ee", dim: "#0e7490", glow: "#67e8f9" },
-        // verdict semantics
-        confirmed: "#f43f5e",
-        suspicious: "#f59e0b",
-        benign: "#10b981",
-        inconclusive: "#64748b",
-        synthesis: "#a78bfa",
+        haze: "#94a3b8", // VulnPilot --muted slate
+        // VulnPilot signature: orange (#ea580c / #f97316), lifted for a dark UI
+        brand: { DEFAULT: "#f97316", dim: "#ea580c", glow: "#fdba74" },
+        // VulnPilot secondary accent: teal (their "--cyan")
+        teal: { DEFAULT: "#0d9488", glow: "#2dd4bf" },
+        // verdict semantics, aligned to VulnPilot's exact severity shades
+        confirmed: "#ef4444", // VulnPilot --crit
+        suspicious: "#f59e0b", // VulnPilot --amber
+        benign: "#16a34a", // VulnPilot --low
+        inconclusive: "#64748b", // VulnPilot --muted / --info
+        synthesis: "#8b5cf6", // VulnPilot --purple
       },
       fontFamily: {
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(34,211,238,0.25), 0 8px 40px -12px rgba(34,211,238,0.25)",
+        glow: "0 0 0 1px rgba(249,115,22,0.25), 0 8px 40px -12px rgba(249,115,22,0.25)",
         panel: "0 1px 0 0 rgba(255,255,255,0.03) inset, 0 12px 40px -20px rgba(0,0,0,0.8)",
       },
       keyframes: {

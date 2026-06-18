@@ -1,11 +1,16 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nav } from "@/components/Nav";
 
 export const metadata: Metadata = {
   title: "Veritas - the AI never gets the final word",
   description:
     "A chain-of-custody platform for AI-assisted investigations. Deterministic code decides what is confirmed; every finding traces to the tool that proved it. Built on Amazon Aurora PostgreSQL.",
+};
+
+// brand orange (VulnPilot palette) tints the mobile browser chrome
+export const viewport: Viewport = {
+  themeColor: "#f97316",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

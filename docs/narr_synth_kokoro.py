@@ -40,7 +40,7 @@ NARR = [
   ["It is for the people who must defend that verdict.", "Security analysts, incident response firms, and insurers."],
   ["High stakes work is adopting A.I. fastest, exactly where a hallucination is unacceptable, so we made the trust provable."],
   ["Second. The working application, live on Aurora."],
-  ["Each case opens with a verdict, an evidence integrity check, and the disposition.", "Here, the A.I. was overruled four times by deterministic code."],
+  ["Each case opens with a verdict, an evidence integrity check, and the disposition.", "In this one case, the A.I. was overruled four times by deterministic code."],
   ["This is the heart of it.", "The model proposed confirmed malicious.", "The code said suspicious, and shows the exact gate that withheld promotion."],
   ["Every claim traces to the validated fact, and the forensic tool that produced it.", "One query, the full proof chain."],
   ["Type any indicator, a hash, an address, a process I.D., and Aurora returns every case it appears in.", "The file based engine cannot do this."],

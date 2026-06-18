@@ -22,9 +22,9 @@ export const SEVERITY_META: Record<string, { text: string; dot: string }> = {
 };
 
 export const VERDICT_META: Record<string, { text: string; ring: string; glow: string }> = {
-  CONFIRMED:  { text: "text-confirmed", ring: "border-confirmed/40", glow: "shadow-[0_0_60px_-15px_rgba(244,63,94,0.5)]" },
+  CONFIRMED:  { text: "text-confirmed", ring: "border-confirmed/40", glow: "shadow-[0_0_60px_-15px_rgba(239,68,68,0.5)]" },
   SUSPICIOUS: { text: "text-suspicious", ring: "border-suspicious/40", glow: "shadow-[0_0_60px_-15px_rgba(245,158,11,0.45)]" },
-  CLEAN:      { text: "text-benign", ring: "border-benign/40", glow: "shadow-[0_0_60px_-15px_rgba(16,185,129,0.45)]" },
+  CLEAN:      { text: "text-benign", ring: "border-benign/40", glow: "shadow-[0_0_60px_-15px_rgba(22,163,74,0.45)]" },
 };
 
 export function Pill({ bucket, count }: { bucket: string; count?: number }) {

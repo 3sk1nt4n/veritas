@@ -43,6 +43,17 @@ ingested from the open-source [Sentinel Ensemble](https://github.com/3sk1nt4n/Se
 engine. No numbers are invented - the ingest adapter asserts the database
 disposition counts match the engine output exactly.
 
+## Who pays (Track 2: Monetizable B2B)
+
+Veritas is sold to the teams who must defend a verdict: incident-response firms,
+in-house security and forensics teams, and cyber-insurers. Pricing is per-analyst
+seat plus per-investigation (metered per case ingested), with an enterprise tier
+for private deployment, SSO, and the org-scoped row-level security already in the
+schema. The unit of value is a court-defensible investigation: a finding that
+traces to proof is worth far more than an unauditable AI guess that a court,
+insurer, or auditor will throw out. The same trust layer can also be licensed as
+an API that any AI investigation product embeds.
+
 ## Why Amazon Aurora PostgreSQL - and how it is integrated
 
 The domain is a naturally normalized, join-heavy chain of custody:
@@ -83,8 +94,9 @@ for the build window (no `pg_trgm`); a single primary region is right for this.
   out of a 310 MB evidence file (hundreds of rows, not 200k), UPSERTs with the
   signature merge, and gates on count-fidelity vs the engine.
 - **Web** (`web/`): Next.js 15 App Router, server components querying Aurora
-  through a pooled client (RDS Proxy / Data API in production); dark
-  investigation-console UI accelerated with v0.
+  through a pooled `pg` client over SSL (a direct pooled connection today; RDS
+  Proxy / the Data API are a drop-in upgrade behind the same connection string);
+  dark investigation-console UI accelerated with v0.
 - **Async worker** (`ingest/worker.py`): Postgres-as-queue - claims jobs with
   `SELECT … FOR UPDATE SKIP LOCKED`, runs the pipeline, ingests results.
 
