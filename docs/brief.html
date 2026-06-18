@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 794px; }
+  body {
+    font-family: "Inter", system-ui, sans-serif; color: #fff7f2; padding: 34px 40px 28px;
+    background:
+      radial-gradient(900px 480px at 88% -6%, rgba(255,184,58,.42), transparent 56%),
+      radial-gradient(820px 520px at -6% 112%, rgba(255,78,150,.40), transparent 58%),
+      linear-gradient(140deg, #3c1c2e 0%, #2a1430 54%, #1d1226 100%);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  h1 { font-size: 34px; font-weight: 800; letter-spacing: -.6px; line-height: 1.02;
+       background: linear-gradient(92deg,#ffe14d,#ffa12e 44%,#ff4d8d 80%,#e879f9);
+       -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .tag { font-size: 14.5px; color: #ffe0cf; margin-top: 6px; }
+  .tag b { color: #ffd45e; }
+  .meta { font-size: 11px; color: #ffc59a; letter-spacing: .4px; margin-top: 9px; text-transform: uppercase; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .links a { font-size: 11.5px; text-decoration: none; color: #2a1206; font-weight: 700;
+             background: linear-gradient(180deg,#ffe06a,#ffb347); border-radius: 8px; padding: 5px 11px; }
+  .links a.ghost { background: transparent; color: #ffd45e; border: 1px solid rgba(255,196,120,.5); }
+  img.arch { width: 100%; border-radius: 12px; border: 1px solid rgba(255,196,120,.4); margin: 16px 0 4px;
+             box-shadow: 0 16px 40px -20px rgba(0,0,0,.6); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px; margin-top: 14px; }
+  .sec h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; color: #ffc04d; margin-bottom: 5px; }
+  .sec p, .sec li { font-size: 12px; color: #ffe6d8; line-height: 1.45; }
+  .sec ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .sec li b { color: #fff; }
+  .full { grid-column: 1 / -1; }
+  .foot { margin-top: 16px; padding-top: 10px; border-top: 1px solid rgba(255,196,120,.3);
+          display: flex; justify-content: space-between; font-size: 11px; color: #ecb6c4; }
+  .foot b { color: #ffd45e; }
+</style>
+</head>
+<body>
+  <h1>Veritas - the AI never gets the final word</h1>
+  <div class="tag">The trust layer for AI investigations: <b>deterministic code, not the model, decides what is "confirmed,"</b> and every finding traces by foreign key to the exact forensic tool that proved it.</div>
+  <div class="meta">H0 Hackathon &middot; Track 2 (Monetizable B2B) &middot; Amazon Aurora PostgreSQL Serverless v2 + Vercel</div>
+  <div class="links">
+    <a href="https://veritas-rouge.vercel.app">Live app: veritas-rouge.vercel.app</a>
+    <a class="ghost" href="https://youtu.be/FFDDwCKO95g">Demo: youtu.be/FFDDwCKO95g</a>
+    <a class="ghost" href="https://github.com/3sk1nt4n/veritas">Code: github.com/3sk1nt4n/veritas</a>
+  </div>
+
+  <img class="arch" src="architecture.png" alt="Veritas architecture" />
+
+  <div class="grid">
+    <div class="sec">
+      <h2>The problem</h2>
+      <p>High-stakes work adopts AI fastest - incident response, fraud, compliance - and that is exactly where you cannot ship a conclusion you cannot audit. Courts, insurers, and auditors do not trust the model. Veritas makes the trust provable.</p>
+    </div>
+    <div class="sec">
+      <h2>Why it is original</h2>
+      <p>"Code overrules the AI, and every claim traces to proof" is not a slogan here - it is a SQL schema you can query. The override is a real column, the proof a real foreign key, the corroboration a real ON CONFLICT merge.</p>
+    </div>
+    <div class="sec full">
+      <h2>What it does</h2>
+      <ul>
+        <li><b>Case dashboard</b> - verdict, SHA-256 evidence-integrity badge, five-way disposition scoreboard.</li>
+        <li><b>AI-overruled view</b> - where the model wanted CONFIRMED MALICIOUS but the code said SUSPICIOUS, with the exact gate that withheld promotion.</li>
+        <li><b>Proof chain</b> - one click: claim to validated fact to source forensic tool, with the raw tool output.</li>
+        <li><b>Cross-case IOC pivot</b> - type a hash, IP, or PID; one indexed Aurora query returns every case it appears in.</li>
+        <li><b>Queue a new investigation</b> - Postgres-as-queue; a worker claims jobs with SELECT ... FOR UPDATE SKIP LOCKED and streams 16-step progress.</li>
+      </ul>
+    </div>
+    <div class="sec full">
+      <h2>How Amazon Aurora PostgreSQL is used (the data model is the product)</h2>
+      <ul>
+        <li><b>Foreign keys enforce the chain of custody</b> - a finding cannot cite proof that does not exist.</li>
+        <li><b>UNIQUE(case_id, fact_signature)</b> turns the engine's SHA-1 dedup into an idempotent ON CONFLICT UPSERT - cross-tool corroboration in one statement.</li>
+        <li><b>~19 real indexes</b> (btree, GIN on JSONB, pg_trgm) mirror the engine's pivot indexes; a <b>recursive CTE</b> walks the process tree; a <b>materialized view</b> powers cross-case pivots.</li>
+        <li><b>RLS by org_id</b> is scaffolded for multi-tenant SaaS; <b>Serverless v2</b> scales to zero between investigations. The data is real - the ingest adapter asserts DB counts match the engine exactly.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot"><span><b>github.com/3sk1nt4n/veritas</b> &middot; built during the submission period (new project)</span><span><b>#H0Hackathon</b></span></div>
+</body>
+</html>
