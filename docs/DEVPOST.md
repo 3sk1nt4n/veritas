@@ -43,14 +43,14 @@ I created this video for the purposes of entering the H0 Hackathon. #H0Hackathon
 
 ## Step 2 - Devpost form (H01.devpost.com -> Enter a Submission)
 
-**2.1 Project name**
+**2.1 Project name** (Devpost caps this at 60 chars)
 ```
-Veritas
+Veritas: the AI never gets the final word
 ```
 
-**2.2 Elevator pitch / tagline**
+**2.2 Elevator pitch / tagline** (Devpost caps this at 200 chars)
 ```
-AI investigates the evidence, but deterministic code - not the model - has the final word, and every finding traces by foreign key to the tool that proved it. A chain-of-custody platform on Amazon Aurora + Vercel.
+AI investigates the evidence, but deterministic code - not the model - decides what is confirmed, and every finding traces to the tool that proved it. On Amazon Aurora + Vercel.
 ```
 
 **2.3 Project Story / description**
