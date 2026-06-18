@@ -5,14 +5,18 @@ import { Pool } from "pg";
 // (same connection string; set PGSSL=require for Aurora).
 const globalForPg = globalThis as unknown as { __veritasPool?: Pool };
 
+const CONN =
+  process.env.DATABASE_URL ?? "postgresql://postgres:veritas@localhost:5433/veritas";
+// Aurora requires SSL; the local Docker Postgres does not. Decide by host so a
+// missing or mistyped PGSSL can never break the cloud connection.
+const IS_LOCAL = /@(localhost|127\.0\.0\.1|host\.docker\.internal)/.test(CONN);
+
 export const pool: Pool =
   globalForPg.__veritasPool ??
   new Pool({
-    connectionString:
-      process.env.DATABASE_URL ??
-      "postgresql://postgres:veritas@localhost:5433/veritas",
+    connectionString: CONN,
     max: 5,
-    ssl: process.env.PGSSL === "require" ? { rejectUnauthorized: false } : undefined,
+    ssl: IS_LOCAL && process.env.PGSSL !== "require" ? undefined : { rejectUnauthorized: false },
   });
 
 if (!globalForPg.__veritasPool) globalForPg.__veritasPool = pool;
