@@ -41,7 +41,7 @@ def render(name, w, h, body, css):
     hp = os.path.join(HERE, f"{name}.html"); pp = os.path.join(HERE, f"{name}.png")
     open(hp, "w").write(html)
     subprocess.run(["chromium", "--headless=new", "--no-sandbox", "--hide-scrollbars",
-                    "--force-device-scale-factor=2", f"--window-size={w},{h}",
+                    "--force-device-scale-factor=3", f"--window-size={w},{h}",
                     "--virtual-time-budget=5000", "--default-background-color=ff1d1226",
                     f"--screenshot={pp}", f"file://{hp}"], capture_output=True)
     print(f"rendered {pp} ({os.path.getsize(pp)//1024} KB)")

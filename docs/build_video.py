@@ -96,6 +96,7 @@ ul.bul b{color:#fff}
 .window img{width:100%;display:block}
 .full-img{position:absolute;inset:0;display:grid;place-items:center}
 .full-img img{max-width:1660px;max-height:840px;border:1px solid #233149;border-radius:14px;box-shadow:0 40px 90px -30px rgba(0,0,0,.9)}
+.full-img.big img{max-width:1880px;max-height:1015px}
 .vignette{position:absolute;inset:0;pointer-events:none;z-index:1;
   background:radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(7,10,16,.5) 100%)}
 .cap{position:absolute;bottom:70px;left:0;right:0;text-align:center;font-size:30px;color:#aab8cf;padding:0 200px}
@@ -142,9 +143,14 @@ def cover(kicker, title_html, sub):
     return f'{BRAND}{k}<h1 class="cover">{title_html}</h1><div class="cover-sub">{sub}</div>{foot}'
 
 
-def full(img, caption, badge=False):
+def full(img, caption, badge=False, big=False):
     b = EVBADGE if badge else ""
-    return f'{BRAND}{b}<div class="full-img"><img src="{img}"><div class="vignette"></div></div><div class="cap">{caption}</div>'
+    cls = " big" if big else ""
+    cap = "" if big else f'<div class="cap">{caption}</div>'
+    # big = near full-bleed diagram with its own frame/title, so drop the deck's
+    # corner brackets + brandmark + grid to avoid double-framing.
+    brand = "" if big else BRAND
+    return f'{brand}{b}<div class="full-img{cls}"><img src="{img}"><div class="vignette"></div></div>{cap}'
 
 
 def statement(kicker, big_html, sub, reveal=9):
@@ -217,8 +223,8 @@ AURORA_BULLETS = [
 # each slide: {dur, states:[html,...], heavy:bool}
 SLIDES = [
     # cold open on the pipeline / architecture
-    {"dur": 5.5, "heavy": True, "states": [full(ARCH,
-            "The system: a Vercel front end, Amazon Aurora as the system of record, an engine worker behind a trust boundary.")]},
+    {"dur": 5.5, "heavy": True, "static": True, "states": [full(ARCH,
+            "The system: a Vercel front end, Amazon Aurora as the system of record, an engine worker behind a trust boundary.", big=True)]},
     {"dur": 5.0, "states": [cover("H0 &middot; Track 2 (B2B) &middot; Amazon Aurora PostgreSQL + Vercel",
             'VERI<span class="c">TAS</span>',
             'The investigation platform where the AI <span class="thesis">never gets the final word.</span>')]},
@@ -256,10 +262,10 @@ SLIDES = [
             "&hellip;/runs", data_uri(os.path.join(SHOTS, "06-runs.png")))]},
 
     # ---- under the hood: the real engine ----
-    {"dur": 5.5, "heavy": True, "states": [full(STRUCTURE,
-            "The Veritas repo: a Next.js front end on Vercel, the Amazon Aurora schema, and an async ingest worker.")]},
-    {"dur": 7.0, "heavy": True, "states": [full(PIPELINE,
-            "End to end: evidence to engine to Aurora to the Vercel app - only validated facts cross the trust boundary.")]},
+    {"dur": 5.5, "heavy": True, "static": True, "states": [full(STRUCTURE,
+            "The Veritas repo: a Next.js front end on Vercel, the Amazon Aurora schema, and an async ingest worker.", big=True)]},
+    {"dur": 7.0, "heavy": True, "static": True, "states": [full(PIPELINE,
+            "End to end: evidence to engine to Aurora to the Vercel app - only validated facts cross the trust boundary.", big=True)]},
 
     # ---- Q3 ----
     {"dur": 5.5, "states": [statement("Answering the brief &middot; 3 of 3",
@@ -275,7 +281,7 @@ SLIDES = [
         bullets("How Aurora is used", AURORA_BULLETS, reveal=4, sql=SQL, sql_shown=False),
         bullets("How Aurora is used", AURORA_BULLETS, reveal=5, sql=SQL, sql_shown=False),
         bullets("How Aurora is used", AURORA_BULLETS, reveal=5, sql=SQL, sql_shown=True)]},
-    {"dur": 6.5, "heavy": True, "states": [aurora_proof()]},
+    {"dur": 6.5, "heavy": True, "static": True, "states": [aurora_proof()]},
 
     # ---- close ----
     {"dur": 6.0, "states": [cover("", 'The AI never gets <span class="thesis">the final word.</span>',
@@ -308,7 +314,7 @@ def plan_clips():
                 else:
                     edge = ("fade", REVEAL)
             flat.append({"si": si, "j": j, "dur": durs[j], "heavy": s.get("heavy", False),
-                         "edge": edge, "html": states[j]})
+                         "static": s.get("static", False), "edge": edge, "html": states[j]})
     return flat
 
 
@@ -334,8 +340,12 @@ def stitch(flat):
         inputs += ["-loop", "1", "-t", f"{c['dur']}", "-i", c["png"]]
     fc = []
     for i, c in enumerate(flat):
-        z = "min(zoom+0.00032,1.055)" if c["heavy"] else "min(zoom+0.00020,1.035)"
-        # supersample: states are rendered at 2x; keep 2x through zoompan, downscale to 1080p last (crisp text)
+        if c.get("static"):
+            z = "1"  # full-screen diagrams/screenshots: no zoom, fine text stays pin-sharp
+        else:
+            z = "min(zoom+0.00032,1.055)" if c["heavy"] else "min(zoom+0.00020,1.035)"
+        # supersample: states rendered at 2x; keep 2x through zoompan, downscale to 1080p last.
+        # every clip shares one filter chain (only z differs) so xfade timebases match.
         fc.append(f"[{i}:v]scale={W*2}:{H*2}:force_original_aspect_ratio=decrease,"
                   f"pad={W*2}:{H*2}:(ow-iw)/2:(oh-ih)/2:color=0x070a10,setsar=1,fps={FPS},"
                   f"zoompan=z='{z}':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W*2}x{H*2},"
