@@ -8,6 +8,7 @@
 **Demo video (YouTube):** https://youtu.be/FFDDwCKO95g
 **Vercel Team ID:** `team_IJ1d8VVxwWamhI3235A7kyvS`
 **AWS proof screenshot:** [`docs/assets/rds.png`](assets/rds.png) - the live `veritas-db` Aurora Serverless v2 cluster in the AWS RDS console
+**Bonus content (blog):** https://medium.com/@yeskintan1/i-built-an-ai-investigation-platform-where-the-ai-never-gets-the-final-word-on-amazon-aurora-e3df13abe3ec
 
 ---
 

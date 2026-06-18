@@ -124,7 +124,10 @@ https://youtu.be/FFDDwCKO95g
 
 ## Step 3 - Bonus content (free +0.2 to +0.6)
 
-Publish `docs/BLOG.md` (already written, already carries the hackathon disclosure):
+PUBLISHED: https://medium.com/@yeskintan1/i-built-an-ai-investigation-platform-where-the-ai-never-gets-the-final-word-on-amazon-aurora-e3df13abe3ec
+-> paste this URL into the Devpost "URL(s) to your OPTIONAL content for Bonus Points" field.
+
+Source is `docs/BLOG.md` (already written, already carries the hackathon disclosure):
 1. dev.to is fastest (or Medium / LinkedIn).
 2. Paste the full `docs/BLOG.md`.
 3. Tags: `aws`, `aurora`, `vercel`, `nextjs`.
