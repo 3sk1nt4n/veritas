@@ -6,7 +6,7 @@
 **Live app:** https://veritas-rouge.vercel.app
 **Repo:** https://github.com/3sk1nt4n/veritas
 **Demo video (YouTube):** _paste link at submission_
-**Vercel Team ID:** _paste from Vercel -> Settings -> General at submission_
+**Vercel Team ID:** `team_IJ1d8VVxwWamhI3235A7kyvS`
 **AWS proof screenshot:** [`docs/assets/rds.png`](assets/rds.png) - the live `veritas-db` Aurora Serverless v2 cluster in the AWS RDS console
 
 ---
