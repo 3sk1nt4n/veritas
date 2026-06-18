@@ -87,7 +87,7 @@ Going to Aurora is a connection-string swap (`DATABASE_URL` + `PGSSL=require`).
 ## Submission
 
 - **Live app:** https://veritas-rouge.vercel.app
-- **Demo video:** [`docs/veritas-demo-narrated.mp4`](docs/veritas-demo-narrated.mp4) - narrated, 2:41 (YouTube link at submission). Silent cut: [`docs/veritas-demo.mp4`](docs/veritas-demo.mp4).
+- **Demo video:** [`docs/veritas-demo-narrated.mp4`](docs/veritas-demo-narrated.mp4) - narrated, 2:41 (YouTube link at submission).
 - **Submission text:** [`docs/SUBMISSION.md`](docs/SUBMISSION.md)
 - **Architecture / pipeline / structure:** [`docs/`](docs/)
 
