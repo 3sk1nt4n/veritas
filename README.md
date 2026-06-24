@@ -17,13 +17,16 @@ it.** When the model over-calls a threat, Veritas overrules it and shows the gat
 
 **Live, public, no login: https://veritas-rouge.vercel.app**
 
-## Demo (narrated, 2:41)
+## Demo (1:48) - real footage of the live app
 
 [![Watch the Veritas demo](docs/poster.png)](https://youtu.be/FFDDwCKO95g)
 
-A short walkthrough: the AI overruled four times by deterministic code, every claim traced by
-foreign key to the tool that proved it, and the live Amazon Aurora cluster behind it. Click the
-poster to watch it on YouTube: https://youtu.be/FFDDwCKO95g
+A screen capture of the live app working end to end: the case dashboard, the AI overruled by
+deterministic code (the model said CONFIRMED, the gate held it at SUSPICIOUS), a confirmed
+finding expanded to the raw forensic-tool output that proved it, the cross-case IOC pivot
+returning all three cases for one PID, and the self-draining runs queue - then the Amazon
+Aurora schema and the live cluster in the AWS console. Source:
+[`docs/veritas-demo-live.mp4`](docs/veritas-demo-live.mp4).
 
 ---
 
@@ -87,7 +90,7 @@ Going to Aurora is a connection-string swap (`DATABASE_URL` + `PGSSL=require`).
 ## Submission
 
 - **Live app:** https://veritas-rouge.vercel.app
-- **Demo video:** [watch on YouTube](https://youtu.be/FFDDwCKO95g) - narrated, 2:41. Source: [`docs/veritas-demo-narrated.mp4`](docs/veritas-demo-narrated.mp4).
+- **Demo video:** [watch on YouTube](https://youtu.be/FFDDwCKO95g) - 1:48, real screen capture of the live app functioning, footage-first. Source: [`docs/veritas-demo-live.mp4`](docs/veritas-demo-live.mp4).
 - **Submission text:** [`docs/SUBMISSION.md`](docs/SUBMISSION.md)
 - **Architecture / pipeline / structure:** [`docs/`](docs/)
 

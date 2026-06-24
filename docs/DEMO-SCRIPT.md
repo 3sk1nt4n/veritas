@@ -1,8 +1,19 @@
 # Veritas - demo video script (target 2:45, hard cap 3:00)
 
-> Note: the SHIPPED demo is the rendered, narrated slide deck at
-> `docs/veritas-demo-narrated.mp4` (runtime ~2:41, neural voiceover). This file
-> is the original recording plan / narration reference behind it.
+> Note: the SHIPPED demo is now `docs/veritas-demo-live.mp4` (1:48, footage-first)
+> - **real screen-capture footage of the live app functioning**, narrated with
+> the same neural voiceover. It is built reproducibly by:
+>   1. `python3 docs/capture_live.py`   - drives headless Chromium over the
+>      DevTools Protocol against the running app and records each app beat
+>      (landing, dashboard, the AI-overrule gate, the proof chain + raw tool
+>      output, the cross-case pivot, the self-draining runs queue) to
+>      `docs/video_build/live/beat*.mp4`.
+>   2. `python3 docs/build_live_cut.py` - interleaves that footage with the
+>      title / problem / Aurora / close cards and lays the narration over it.
+>
+> The earlier `docs/veritas-demo-narrated.mp4` (2:41) was a rendered slide deck
+> of static screenshots; it was replaced because the rules require footage that
+> shows the project functioning. This file is the narration reference behind both.
 
 Record at 1440-wide, dark room, screen capture + voiceover. Use the live app
 (pre-ingested data - never run the slow pipeline on camera). Have these tabs open:
