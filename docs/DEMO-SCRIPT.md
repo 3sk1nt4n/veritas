@@ -13,7 +13,7 @@
 >   2. `python3 docs/build_live_cut.py` - interleaves that footage with the
 >      title / problem / Aurora / close cards and lays the narration over it.
 >
-> The earlier `docs/veritas-demo-narrated.mp4` (2:41) was a rendered slide deck
+> The earlier narrated cut (2:41, removed from the repo) was a rendered slide deck
 > of static screenshots; it was replaced because the rules require footage that
 > shows the project functioning. This file is the narration reference behind both.
 
