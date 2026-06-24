@@ -103,7 +103,7 @@ https://github.com/3sk1nt4n/veritas
 
 **2.6 Video link:**
 ```
-https://youtu.be/FFDDwCKO95g
+https://youtu.be/3YdoEqMQZOE
 ```
 
 **2.7 Gallery image / thumbnail:** upload `docs/poster.png`.

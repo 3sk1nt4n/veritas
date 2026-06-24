@@ -43,6 +43,25 @@ SEGMENTS = [
     ("still", "s18_0.png",               [18],   None),   # close
 ]
 
+# RUBRIC variant (RUBRIC=1): same footage-first spine, but signposts the three
+# judge questions (problem/for-whom, the working app, which AWS database) with
+# the existing "First/Second/Third" narration. Still opens on the live app and
+# keeps the app demo as the visual majority. -> docs/veritas-demo-live-v3.mp4
+RUBRIC_SEGMENTS = [
+    ("video", "live/beat0_intro.mp4",    [1, 2],  None),  # live app + title + "First: what problem, and for whom?"
+    ("still", "s03_2.png",               [3],     None),  # the problem
+    ("still", "s04_0.png",               [4],     None),  # for whom
+    ("video", "live/beat2_dashboard.mp4",[6, 7],  None),  # "Second: the working application, live on Aurora" + verdict/overruled
+    ("video", "live/beat3_overrule.mp4", [8],     None),  # AI did not get the final word + gate
+    ("video", "live/beat4_proof.mp4",    [9],     None),  # proof chain -> raw tool output
+    ("video", "live/beat5_pivot.mp4",    [10],    None),  # cross-case pivot (3 cases)
+    ("video", "live/beat6_runs.mp4",     [11],    10.5),  # live self-draining queue
+    ("still", "s15_0.png",               [14, 15],None),  # "Third: which AWS database, and how?" + Aurora intro
+    ("still", "s16_6.png",               [16],    None),  # how Aurora is used (FK / ON CONFLICT / CTE)
+    ("still", "s17_0.png",               [17],    None),  # the real cluster in the AWS console
+    ("still", "s18_0.png",               [18],    None),  # close
+]
+
 
 def probe(path):
     o = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
@@ -65,9 +84,12 @@ def src_path(s):
 
 def main():
     vo_len = json.load(open(os.path.join(NARR, "durations.json")))
+    rubric = bool(os.environ.get("RUBRIC"))
+    segs_def = RUBRIC_SEGMENTS if rubric else SEGMENTS
+    out_path = os.path.join(HERE, "veritas-demo-live-v3.mp4") if rubric else OUT
 
     segs = []
-    for kind, src, vo, trim in SEGMENTS:
+    for kind, src, vo, trim in segs_def:
         p = src_path(src)
         assert os.path.exists(p), f"missing {p}"
         vos = vo if isinstance(vo, list) else [vo]
@@ -160,9 +182,9 @@ def main():
 
     run(["ffmpeg", "-y", "-i", SILENT, "-i", VO_FULL, "-map", "0:v", "-map", "1:a",
          "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-ar", "48000",
-         "-movflags", "+faststart", OUT])
+         "-movflags", "+faststart", out_path])
 
-    print(f"\nOK -> {OUT}")
+    print(f"\nOK -> {out_path}")
     print(f"   {total:.1f}s ({total/60:.2f} min), {len(segs)} segments, "
           f"opens on LIVE app footage, {sum(1 for s in segs if s['kind']=='video')} footage beats")
 

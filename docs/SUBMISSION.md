@@ -5,7 +5,7 @@
 **Front end:** Next.js on Vercel / v0
 **Live app:** https://veritas-rouge.vercel.app
 **Repo:** https://github.com/3sk1nt4n/veritas
-**Demo video (YouTube):** https://youtu.be/FFDDwCKO95g - 1:48, real screen capture of the live app functioning, footage-first (source: `docs/veritas-demo-live.mp4`)
+**Demo video (YouTube):** https://youtu.be/3YdoEqMQZOE - 2:13, real screen capture of the live app functioning, footage-first, answering the three judge questions (source: `docs/veritas-demo-live.mp4`)
 **Vercel Team ID:** `team_IJ1d8VVxwWamhI3235A7kyvS`
 **AWS proof screenshot:** [`docs/assets/rds.png`](assets/rds.png) - the live `veritas-db` Aurora Serverless v2 cluster in the AWS RDS console
 **Bonus content (blog):** https://medium.com/@yeskintan1/i-built-an-ai-investigation-platform-where-the-ai-never-gets-the-final-word-on-amazon-aurora-e3df13abe3ec
