@@ -1,7 +1,8 @@
 # Veritas - demo video script (target 2:45, hard cap 3:00)
 
-> Note: the SHIPPED demo is now `docs/veritas-demo-live.mp4` (2:13, footage-first,
-> answers the three judge questions; build the canonical cut with `RUBRIC=1`)
+> Note: the SHIPPED demo is now `docs/veritas-demo-live.mp4` (2:22, footage-first,
+> answers all three judge questions - problem, for whom, why; build the canonical
+> cut with `RUBRIC=1`)
 > - **real screen-capture footage of the live app functioning**, narrated with
 > the same neural voiceover. It is built reproducibly by:
 >   1. `python3 docs/capture_live.py`   - drives headless Chromium over the

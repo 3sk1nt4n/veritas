@@ -17,9 +17,9 @@ it.** When the model over-calls a threat, Veritas overrules it and shows the gat
 
 **Live, public, no login: https://veritas-rouge.vercel.app**
 
-## Demo (2:13) - real footage of the live app
+## Demo (2:22) - real footage of the live app
 
-[![Watch the Veritas demo](docs/poster.png)](https://youtu.be/3YdoEqMQZOE)
+[![Watch the Veritas demo](docs/poster.png)](https://youtu.be/bVOmMBCdGAs)
 
 A screen capture of the live app working end to end: the case dashboard, the AI overruled by
 deterministic code (the model said CONFIRMED, the gate held it at SUSPICIOUS), a confirmed
@@ -90,7 +90,7 @@ Going to Aurora is a connection-string swap (`DATABASE_URL` + `PGSSL=require`).
 ## Submission
 
 - **Live app:** https://veritas-rouge.vercel.app
-- **Demo video:** [watch on YouTube](https://youtu.be/3YdoEqMQZOE) - 2:13, real screen capture of the live app functioning, footage-first, answering the three judge questions. Source: [`docs/veritas-demo-live.mp4`](docs/veritas-demo-live.mp4).
+- **Demo video:** [watch on YouTube](https://youtu.be/bVOmMBCdGAs) - 2:22, real screen capture of the live app functioning, footage-first, answering the three judge questions (problem, for whom, and why). Source: [`docs/veritas-demo-live.mp4`](docs/veritas-demo-live.mp4).
 - **Submission text:** [`docs/SUBMISSION.md`](docs/SUBMISSION.md)
 - **Architecture / pipeline / structure:** [`docs/`](docs/)
 

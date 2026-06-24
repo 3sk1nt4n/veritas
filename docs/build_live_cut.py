@@ -49,8 +49,9 @@ SEGMENTS = [
 # keeps the app demo as the visual majority. -> docs/veritas-demo-live-v3.mp4
 RUBRIC_SEGMENTS = [
     ("video", "live/beat0_intro.mp4",    [1, 2],  None),  # live app + title + "First: what problem, and for whom?"
-    ("still", "s03_2.png",               [3],     None),  # the problem
+    ("still", "s03_2.png",               [3],     None),  # the problem (what)
     ("still", "s04_0.png",               [4],     None),  # for whom
+    ("still", "s05_0.png",               [5],     None),  # why this problem (high-stakes AI adoption)
     ("video", "live/beat2_dashboard.mp4",[6, 7],  None),  # "Second: the working application, live on Aurora" + verdict/overruled
     ("video", "live/beat3_overrule.mp4", [8],     None),  # AI did not get the final word + gate
     ("video", "live/beat4_proof.mp4",    [9],     None),  # proof chain -> raw tool output
